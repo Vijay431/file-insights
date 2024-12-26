@@ -7,8 +7,9 @@ A Visual Studio Code extension that provides real-time file size information dir
 - 📊 Real-time file size monitoring
 - 🔄 Automatic updates when file content changes
 - 📏 Smart size formatting (B, KB, MB)
-- 🎯 Status bar integration
+- 🎯 Status bar integration with enhanced visibility
 - ⚡ Lightweight and efficient
+- 📁 Support for files up to 1GB
 
 ## Installation
 
@@ -25,6 +26,12 @@ The extension automatically displays the current file size in the status bar whe
 - Switching between files
 - Modifying file content
 
+### Status Bar Display
+
+The file size is shown in the status bar with a smart format (B, KB, MB) based on the file size. The status bar display is right-aligned for better visibility.
+
+![Status Bar Display](assets/images/status-bar.png)
+
 ### Commands
 
 File Insights provides the following commands (accessible via Command Palette `Ctrl+Shift+P` or `Cmd+Shift+P`):
@@ -38,13 +45,34 @@ File Insights provides the following commands (accessible via Command Palette `C
 
 ## Extension Settings
 
-Currently, this extension runs with default settings. Future versions may include customizable options.
+This extension includes the following settings:
+
+- `fileInsights.sizeFormat`: Customize how file sizes are displayed
 
 ## Known Issues
 
-Please report any issues on our [GitHub repository](https://github.com/Vijay431/vscode-browser-extension/issues).
+Please report any issues on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension/issues).
 
 ## Release Notes
+
+### 0.0.4 (Latest)
+
+- Updated documentation structure
+- Enhanced documentation and user guides
+- Updated `assets` directory for better organization
+- Updated extension icon and branding assets
+
+### 0.0.3
+
+- Added support for files up to 1GB
+- New status bar tooltip with detailed file information
+- Added configuration option to customize size display format
+- Improved performance for frequent file updates
+- Enhanced status bar UI for better visibility
+- Optimized extension activation time
+- Fixed issue with status bar not updating after file rename
+- Fixed memory leak in file watcher implementation
+- Fixed incorrect size calculation for certain file types
 
 ### 0.0.2
 
@@ -62,7 +90,7 @@ Initial release of File Insights:
 
 ## Contributing
 
-We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/vscode-browser-extension).
+We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension).
 
 ## License
 
@@ -71,7 +99,7 @@ This extension is licensed under the [MIT License](LICENSE).
 ## Developer
 
 - **Vijay Gangatharan**
-- [GitHub Repository](https://github.com/Vijay431/vscode-browser-extension)
+- [GitHub Repository](https://github.com/Vijay431/vscode_file-insights_extension)
 
 ---
 

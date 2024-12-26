@@ -5,6 +5,42 @@ All notable changes to the "File Insights" extension will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 2024-12-27
+
+### Changed
+
+- Updated documentation structure
+- Updated README with clearer instructions
+- Updated `assets` directory for better organization of images and icons
+- Updated extension icon and branding assets for consistency and clarity
+
+### Documentation
+
+- Added detailed deployment checklist
+- Enhanced README with clearer instructions
+- Updated marketplace presentation
+- Improved changelog format and structure
+
+## [0.0.3] - 2024-12-26
+
+### Added
+
+- Support for larger file sizes up to 1GB
+- New status bar tooltip with detailed file information
+- Configuration option to customize size display format
+
+### Changed
+
+- Improved performance for frequent file updates
+- Enhanced status bar UI for better visibility
+- Optimized extension activation time
+
+### Fixed
+
+- Issue with status bar not updating after file rename
+- Memory leak in file watcher implementation
+- Incorrect size calculation for certain file types
+
 ## [0.0.2] - 2024-12-26
 
 ### Changed
@@ -55,5 +91,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development environment configurations
 - Source control ignore patterns
 
+[0.0.4]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.4
+[0.0.3]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.3
 [0.0.2]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.2
 [0.0.1]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.1
