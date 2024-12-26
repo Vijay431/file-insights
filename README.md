@@ -7,8 +7,9 @@ A Visual Studio Code extension that provides real-time file size information dir
 - 📊 Real-time file size monitoring
 - 🔄 Automatic updates when file content changes
 - 📏 Smart size formatting (B, KB, MB)
-- 🎯 Status bar integration
+- 🎯 Status bar integration with enhanced visibility
 - ⚡ Lightweight and efficient
+- 📁 Support for files up to 1GB
 
 ## Installation
 
@@ -38,13 +39,27 @@ File Insights provides the following commands (accessible via Command Palette `C
 
 ## Extension Settings
 
-Currently, this extension runs with default settings. Future versions may include customizable options.
+This extension includes the following settings:
+
+- `fileInsights.sizeFormat`: Customize how file sizes are displayed
 
 ## Known Issues
 
 Please report any issues on our [GitHub repository](https://github.com/Vijay431/vscode-browser-extension/issues).
 
 ## Release Notes
+
+### 0.0.3
+
+- Added support for files up to 1GB
+- New status bar tooltip with detailed file information
+- Added configuration option to customize size display format
+- Improved performance for frequent file updates
+- Enhanced status bar UI for better visibility
+- Optimized extension activation time
+- Fixed issue with status bar not updating after file rename
+- Fixed memory leak in file watcher implementation
+- Fixed incorrect size calculation for certain file types
 
 ### 0.0.2
 
