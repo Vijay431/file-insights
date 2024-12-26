@@ -55,6 +55,13 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 
 ## Release Notes
 
+### 0.0.4 (Latest)
+
+- Updated documentation structure
+- Enhanced documentation and user guides
+- Updated `assets` directory for better organization
+- Updated extension icon and branding assets
+
 ### 0.0.3
 
 - Added support for files up to 1GB
