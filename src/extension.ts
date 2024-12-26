@@ -61,7 +61,7 @@ function cleanupAndDeactivate() {
 
 	vscode.window
 		.showInformationMessage(
-			'Thank you for using File insights! We appreciate your feedback. Would you like to rate the extension?',
+			'Thank you for using File Insights! We appreciate your feedback. Would you like to rate the extension?',
 			'Rate Extension',
 		)
 		.then((selection) => {
