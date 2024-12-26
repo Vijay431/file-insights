@@ -27,11 +27,11 @@
 		"commands": [
 			{
 				"command": "file-insights.activate",
-				"title": "File insights: Activate"
+				"title": "File Insights: Activate"
 			},
 			{
 				"command": "file-insights.deactivate",
-				"title": "File insights: Deactivate"
+				"title": "File Insights: Deactivate"
 			}
 		]
 	},
