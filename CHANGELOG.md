@@ -5,6 +5,20 @@ All notable changes to the "File Insights" extension will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.2] - 2024-12-26
+
+### Changed
+
+- Enhanced stability for real-time file size updates
+- Improved error handling and exception management
+- Performance optimizations for file monitoring
+
+### Fixed
+
+- Bug fixes related to status bar updates
+- Memory usage optimizations
+- Edge case handling for large files
+
 ## [0.0.1] - 2024-12-23
 
 ### Added
@@ -41,4 +55,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development environment configurations
 - Source control ignore patterns
 
+[0.0.2]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.2
 [0.0.1]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.1

@@ -46,6 +46,12 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 
 ## Release Notes
 
+### 0.0.2
+
+- Bug fixes and performance improvements
+- Enhanced stability for real-time updates
+- Improved error handling
+
 ### 0.0.1
 
 Initial release of File Insights:
