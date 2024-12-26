@@ -2,10 +2,10 @@
 	"name": "file-insights",
 	"displayName": "File Insights",
 	"description": "A simple extension to display file information",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"license": "MIT",
 	"publisher": "VijayGangatharan",
-	"icon": "logo.png",
+	"icon": "assets/images/logo.png",
 	"author": {
 		"name": "Vijay Gangatharan",
 		"email": "vijayanand431@gmail.com"
