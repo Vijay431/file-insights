@@ -26,6 +26,12 @@ The extension automatically displays the current file size in the status bar whe
 - Switching between files
 - Modifying file content
 
+### Status Bar Display
+
+The file size is shown in the status bar with a smart format (B, KB, MB) based on the file size. The status bar display is right-aligned for better visibility.
+
+![Status Bar Display](assets/images/status-bar.png)
+
 ### Commands
 
 File Insights provides the following commands (accessible via Command Palette `Ctrl+Shift+P` or `Cmd+Shift+P`):
@@ -45,7 +51,7 @@ This extension includes the following settings:
 
 ## Known Issues
 
-Please report any issues on our [GitHub repository](https://github.com/Vijay431/vscode-browser-extension/issues).
+Please report any issues on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension/issues).
 
 ## Release Notes
 
@@ -77,7 +83,7 @@ Initial release of File Insights:
 
 ## Contributing
 
-We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/vscode-browser-extension).
+We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension).
 
 ## License
 
@@ -86,7 +92,7 @@ This extension is licensed under the [MIT License](LICENSE).
 ## Developer
 
 - **Vijay Gangatharan**
-- [GitHub Repository](https://github.com/Vijay431/vscode-browser-extension)
+- [GitHub Repository](https://github.com/Vijay431/vscode_file-insights_extension)
 
 ---
 
