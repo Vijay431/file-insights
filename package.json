@@ -2,7 +2,7 @@
 	"name": "file-insights",
 	"displayName": "File Insights",
 	"description": "A simple extension to display file information",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"license": "MIT",
 	"publisher": "VijayGangatharan",
 	"repository": {
@@ -40,9 +40,7 @@
 		"vscode:prepublish": "npm run compile",
 		"compile": "tsc -p ./",
 		"lint": "eslint",
-		"watch": "tsc -watch -p ./",
-		"package": "vsce package",
-		"publish": "vsce publish"
+		"watch": "tsc -watch -p ./"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.13.0",
