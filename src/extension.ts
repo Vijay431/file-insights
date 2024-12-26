@@ -6,11 +6,12 @@ let statusBarItem: vscode.StatusBarItem;
 export function activate(context: vscode.ExtensionContext) {
 	// Register commands
 	const activateCommand = vscode.commands.registerCommand('file-insights.activate', () => {
-		vscode.window.showInformationMessage('File insights extension has been activated successfully');
+		vscode.window.showInformationMessage('File Insights extension has been activated successfully');
 		initializeStatusBar();
 	});
 
 	const deactivateCommand = vscode.commands.registerCommand('file-insights.deactivate', () => {
+		vscode.window.showInformationMessage('File Insights extension has been deactivated successfully');
 		cleanupAndDeactivate();
 	});
 
