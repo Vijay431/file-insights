@@ -1,0 +1,42 @@
+name: Pull Request
+run-name: pull-request
+
+permissions:
+    contents: read
+    pull-requests: write
+
+on:
+    push:
+        branches-ignore:
+            - master
+
+jobs:
+    pull_request:
+        runs-on: ubuntu-22.04
+        cancel-timeout-minutes: 2
+        steps:
+            - uses: actions/checkout@v4
+            - name: Determine source and destination branches
+              id: branches
+              run: |
+                  source_branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+                  dest_branch="dev"
+
+                  if [[ $source_branch == "dev" ]]; then
+                    dest_branch="master"
+                  fi
+
+                  echo "Source Branch: $source_branch"
+                  echo "Destination Branch: $dest_branch"
+
+                  echo "SOURCE_BRANCH=$source_branch" >> $GITHUB_OUTPUT
+                  echo "DEST_BRANCH=$dest_branch" >> $GITHUB_OUTPUT
+            - uses: repo-sync/pull-request@v2
+              with:
+                  destination_branch: ${{ steps.branches.outputs.DEST_BRANCH }}
+                  pr_allow_empty: false
+                  pr_assignee: Vijay431
+                  pr_draft: false
+                  pr_reviewer: Vijay431
+                  pr_template: .github/pull_request_template.md
+                  pr_title: '${{ steps.branches.outputs.SOURCE_BRANCH }} → ${{ steps.branches.outputs.DEST_BRANCH }}'
