@@ -30,7 +30,13 @@ The extension automatically displays the current file size in the status bar whe
 
 The file size is shown in the status bar with a smart format (B, KB, MB) based on the file size. The status bar display is right-aligned for better visibility.
 
-![Status Bar Display](assets/images/status-bar.png)
+#### How it looks?
+
+![Status Bar](https://88tynjcpeunoim0x.public.blob.vercel-storage.com/image/vscode-file_insights-extension/status-bar.png)
+
+#### How to activate/deactivate?
+
+![VSCode Command search](https://88tynjcpeunoim0x.public.blob.vercel-storage.com/image/vscode-file_insights-extension/vscode-command.png)
 
 ### Commands
 

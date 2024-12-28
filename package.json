@@ -5,7 +5,7 @@
 	"version": "0.0.4",
 	"license": "MIT",
 	"publisher": "VijayGangatharan",
-	"icon": "assets/images/logo.png",
+	"icon": "https://88tynjcpeunoim0x.public.blob.vercel-storage.com/image/vscode-file_insights-extension/logo.png",
 	"author": {
 		"name": "Vijay Gangatharan",
 		"email": "vijayanand431@gmail.com"
