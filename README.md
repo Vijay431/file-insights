@@ -61,7 +61,11 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 
 ## Release Notes
 
-### 0.0.4 (Latest)
+### 0.1.0 (Latest)
+
+- Updated icon and branding assets in cloud rather than local
+
+### 0.0.4
 
 - Updated documentation structure
 - Enhanced documentation and user guides
