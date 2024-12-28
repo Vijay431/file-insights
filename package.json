@@ -2,10 +2,10 @@
 	"name": "file-insights",
 	"displayName": "File Insights",
 	"description": "A simple extension to display file information",
-	"version": "0.0.4",
+	"version": "0.1.0",
 	"license": "MIT",
 	"publisher": "VijayGangatharan",
-	"icon": "assets/images/logo.png",
+	"icon": "https://88tynjcpeunoim0x.public.blob.vercel-storage.com/image/vscode-file_insights-extension/logo.png",
 	"author": {
 		"name": "Vijay Gangatharan",
 		"email": "vijayanand431@gmail.com"
