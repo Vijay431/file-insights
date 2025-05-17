@@ -2,7 +2,7 @@
 	"name": "file-insights",
 	"displayName": "File Insights",
 	"description": "A simple extension to display file insights in the status bar.",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "MIT",
 	"publisher": "VijayGangatharan",
 	"icon": "logo.png",
