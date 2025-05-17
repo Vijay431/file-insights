@@ -13,7 +13,6 @@ on:
 jobs:
     pull_request:
         runs-on: ubuntu-22.04
-        cancel-timeout-minutes: 2
         steps:
             - uses: actions/checkout@v4
             - name: Determine source and destination branches
