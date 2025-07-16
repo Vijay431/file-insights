@@ -1,62 +1,157 @@
 {
-	"name": "file-insights",
-	"displayName": "File Insights",
-	"description": "A simple extension to display file insights in the status bar.",
-	"version": "0.1.1",
-	"license": "MIT",
-	"publisher": "VijayGangatharan",
-	"icon": "logo.png",
-	"author": {
-		"name": "Vijay Gangatharan",
-		"email": "vijayanand431@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/Vijay431/vscode_file-insights_extension.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Vijay431/vscode_file-insights_extension/issues"
-	},
-	"engines": {
-		"vscode": "^1.90.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:file-insights.activate",
-		"onCommand:file-insights.deactivate",
-		"onStartupFinished"
-	],
-	"contributes": {
-		"commands": [
-			{
-				"command": "file-insights.activate",
-				"title": "File Insights: Activate"
-			},
-			{
-				"command": "file-insights.deactivate",
-				"title": "File Insights: Deactivate"
-			}
-		]
-	},
-	"main": "./dist/extension.js",
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint",
-		"watch": "tsc -watch -p ./"
-	},
-	"devDependencies": {
-		"@eslint/js": "^9.13.0",
-		"@stylistic/eslint-plugin": "^2.9.0",
-		"@types/fs-extra": "^11.0.4",
-		"@types/vscode": "^1.73.0",
-		"eslint": "^9.13.0",
-		"typescript": "^5.7.2",
-		"typescript-eslint": "^8.16.0"
-	},
-	"dependencies": {
-		"fs-extra": "^11.2.0"
-	}
+  "name": "file-insights",
+  "displayName": "File Insights",
+  "description": "Display real-time file size information and insights directly in VS Code's status bar with customizable formatting and smart performance optimization.",
+  "version": "0.1.1",
+  "license": "MIT",
+  "publisher": "VijayGangatharan",
+  "icon": "logo.png",
+  "author": {
+    "name": "Vijay Gangatharan",
+    "email": "vijayanand431@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vijay431/vscode_file-insights_extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vijay431/vscode_file-insights_extension/issues"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "file",
+    "size",
+    "status bar",
+    "analytics",
+    "insights"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "fileInsights.enable",
+        "title": "File Insights: Enable",
+        "category": "File Insights"
+      },
+      {
+        "command": "fileInsights.disable",
+        "title": "File Insights: Disable",
+        "category": "File Insights"
+      },
+      {
+        "command": "fileInsights.refresh",
+        "title": "File Insights: Refresh",
+        "category": "File Insights"
+      },
+      {
+        "command": "fileInsights.showDetails",
+        "title": "File Insights: Show Details",
+        "category": "File Insights"
+      },
+      {
+        "command": "fileInsights.showOutputChannel",
+        "title": "File Insights: Show Output Channel",
+        "category": "File Insights"
+      }
+    ],
+    "configuration": {
+      "title": "File Insights",
+      "properties": {
+        "fileInsights.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable File Insights extension"
+        },
+        "fileInsights.displayFormat": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "bytes",
+            "kb",
+            "mb"
+          ],
+          "default": "auto",
+          "description": "Format for displaying file sizes",
+          "enumDescriptions": [
+            "Automatically choose the best format",
+            "Always show in bytes",
+            "Always show in kilobytes",
+            "Always show in megabytes"
+          ]
+        },
+        "fileInsights.statusBarPosition": {
+          "type": "string",
+          "enum": [
+            "left",
+            "right"
+          ],
+          "default": "right",
+          "description": "Position of the status bar item"
+        },
+        "fileInsights.showTooltip": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show detailed tooltip on hover"
+        },
+        "fileInsights.refreshInterval": {
+          "type": "number",
+          "default": 500,
+          "minimum": 100,
+          "maximum": 5000,
+          "description": "Refresh interval in milliseconds"
+        },
+        "fileInsights.maxFileSize": {
+          "type": "number",
+          "default": 1073741824,
+          "minimum": 1048576,
+          "description": "Maximum file size to analyze (in bytes)"
+        }
+      }
+    }
+  },
+  "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "pretest": "npm run compile-tests",
+    "compile-tests": "tsc -p . --outDir dist",
+    "watch-tests": "tsc -p . -w --outDir dist",
+    "lint": "eslint src --ext ts",
+    "test": "node ./dist/test/runTest.js",
+    "test:watch": "npm run compile-tests && npm run test",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "@stylistic/eslint-plugin": "^5.1.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^18.19.118",
+    "@types/vscode": "^1.102.0",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.31.0",
+    "fast-glob": "^3.3.3",
+    "mocha": "^11.7.1",
+    "picocolors": "^1.1.1",
+    "prettier": "^3.6.2",
+    "terser-webpack-plugin": "^5.3.14",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0",
+    "webpack": "^5.100.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "dependencies": {
+    "fs-extra": "^11.3.0"
+  }
 }
