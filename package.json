@@ -2,7 +2,7 @@
   "name": "file-insights",
   "displayName": "File Insights",
   "description": "Display real-time file size information and insights directly in VS Code's status bar with customizable formatting and smart performance optimization.",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "license": "MIT",
   "publisher": "VijayGangatharan",
   "icon": "logo.png",
