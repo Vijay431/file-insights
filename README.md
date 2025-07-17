@@ -94,7 +94,17 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 
 ## Release Notes
 
-### 1.0.0 (Latest)
+### 1.1.0 (Latest)
+
+**Repository Restructuring & Workflow Improvements**
+
+- Updated repository structure and naming
+- Enhanced CI/CD workflow with automated deployment
+- Improved documentation and configuration
+- Consolidated development workflows
+- Added automated VS Code Marketplace deployment
+
+### 1.0.0
 
 **Major Release - Complete Architectural Overhaul**
 

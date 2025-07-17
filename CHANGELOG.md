@@ -5,6 +5,21 @@ All notable changes to the "File Insights" extension will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-07-17
+
+### Changed
+
+- Updated repository name from `vscode_file-insights_extension` to `file-insights`
+- Updated all repository links and references
+- Improved GitHub Actions CI/CD workflow with deployment integration
+- Enhanced documentation for better clarity
+
+### Technical
+
+- Consolidated CI/CD workflows into a single pipeline
+- Added automated VS Code Marketplace deployment
+- Updated project metadata and configurations
+
 ## [1.0.0] - 2025-07-16
 
 ### Added
@@ -138,6 +153,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development environment configurations
 - Source control ignore patterns
 
-[0.0.3]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.3
-[0.0.2]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.2
-[0.0.1]: https://github.com/Vijay431/vscode-browser-extension/releases/tag/v0.0.1
+[1.1.0]: https://github.com/Vijay431/file-insights/releases/tag/v1.1.0
+[1.0.0]: https://github.com/Vijay431/file-insights/releases/tag/v1.0.0
+[0.1.0]: https://github.com/Vijay431/file-insights/releases/tag/v0.1.0
+[0.0.4]: https://github.com/Vijay431/file-insights/releases/tag/v0.0.4
+[0.0.3]: https://github.com/Vijay431/file-insights/releases/tag/v0.0.3
+[0.0.2]: https://github.com/Vijay431/file-insights/releases/tag/v0.0.2
+[0.0.1]: https://github.com/Vijay431/file-insights/releases/tag/v0.0.1
