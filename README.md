@@ -5,6 +5,7 @@ A professional Visual Studio Code extension that provides real-time file size in
 ## Features
 
 ### Core Functionality
+
 - 📊 **Real-time file size monitoring** with intelligent updates
 - 🔄 **Automatic updates** when file content changes or files are switched
 - 📏 **Smart size formatting** (auto, bytes, KB, MB) with customizable display
@@ -13,6 +14,7 @@ A professional Visual Studio Code extension that provides real-time file size in
 - 📁 **Large file support** up to configurable size limits (default 1GB)
 
 ### Professional Features
+
 - 🎛️ **Comprehensive configuration system** with real-time updates
 - 📝 **Detailed tooltips** with file information on hover
 - 🔧 **Extensive command palette integration** with categorized commands
@@ -66,6 +68,7 @@ File Insights provides comprehensive command palette integration (accessible via
 File Insights provides extensive configuration options for customization:
 
 ### Core Settings
+
 - `fileInsights.enabled` (boolean, default: `true`) - Enable or disable the extension
 - `fileInsights.displayFormat` (string, default: `"auto"`) - Size display format
   - `"auto"` - Automatically choose the best format
@@ -74,18 +77,20 @@ File Insights provides extensive configuration options for customization:
   - `"mb"` - Always show in megabytes
 
 ### Display Settings
+
 - `fileInsights.statusBarPosition` (string, default: `"right"`) - Status bar position
   - `"left"` - Left side of status bar
   - `"right"` - Right side of status bar
 - `fileInsights.showTooltip` (boolean, default: `true`) - Show detailed tooltip on hover
 
 ### Performance Settings
+
 - `fileInsights.refreshInterval` (number, default: `500`) - Refresh interval in milliseconds (100-5000ms)
 - `fileInsights.maxFileSize` (number, default: `1073741824`) - Maximum file size to analyze in bytes (1GB default)
 
 ## Known Issues
 
-Please report any issues on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension/issues).
+Please report any issues on our [GitHub repository](https://github.com/Vijay431/file-insights/issues).
 
 ## Release Notes
 
@@ -94,6 +99,7 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 **Major Release - Complete Architectural Overhaul**
 
 #### New Features
+
 - Modern enterprise-grade architecture with separation of concerns
 - Comprehensive configuration system with real-time updates
 - Advanced status bar management with positioning options
@@ -104,6 +110,7 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 - Enhanced command system with detailed categorization
 
 #### Technical Improvements
+
 - ExtensionManager for centralized lifecycle management
 - StatusBarManager for dedicated UI control
 - ConfigurationService for settings integration
@@ -114,6 +121,7 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 - Source maps for debugging support
 
 #### Performance & Reliability
+
 - Complete architectural refactor with manager/service pattern
 - Improved error handling and graceful degradation
 - Enhanced performance with debounced updates
@@ -163,17 +171,20 @@ Initial release of File Insights:
 File Insights follows a modern, enterprise-grade architecture with clear separation of concerns:
 
 ### Core Components
+
 - **ExtensionManager** - Central coordinator for lifecycle management
 - **StatusBarManager** - Dedicated UI control for status bar interactions
 - **ConfigurationService** - VS Code settings integration with real-time updates
 - **FileService** - File system operations with comprehensive error handling
 
 ### Utilities
+
 - **Formatter** - Smart file size formatting with configurable options
 - **Logger** - Structured logging with output channel integration
 - **Type Definitions** - Comprehensive TypeScript interfaces for type safety
 
 ### Development
+
 - **Professional Test Suite** - Comprehensive testing with @vscode/test-electron
 - **Webpack Build System** - Optimized production builds with source maps
 - **ESLint + Prettier** - Code quality and formatting standards
@@ -181,7 +192,7 @@ File Insights follows a modern, enterprise-grade architecture with clear separat
 
 ## Contributing
 
-We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension).
+We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/file-insights).
 
 ### Development Setup
 
@@ -207,8 +218,8 @@ This extension is licensed under the [MIT License](LICENSE).
 ## Developer
 
 - **Vijay Gangatharan**
-- Email: vijayanand431@gmail.com
-- [GitHub Repository](https://github.com/Vijay431/vscode_file-insights_extension)
+- Email: <vijayanand431@gmail.com>
+- [GitHub Repository](https://github.com/Vijay431/file-insights)
 
 ---
 

@@ -12,11 +12,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Vijay431/vscode_file-insights_extension.git"
+    "url": "https://github.com/Vijay431/file-insights.git"
   },
   "bugs": {
-    "url": "https://github.com/Vijay431/vscode_file-insights_extension/issues"
+    "url": "https://github.com/Vijay431/file-insights/issues"
   },
+  "homepage": "https://github.com/Vijay431/file-insights#readme",
+  "keywords": [
+    "file-size",
+    "status-bar",
+    "productivity",
+    "file-insights",
+    "vscode-extension"
+  ],
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
   "engines": {
     "vscode": "^1.90.0"
   },
