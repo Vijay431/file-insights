@@ -1,15 +1,26 @@
 # File Insights - VS Code Extension
 
-A Visual Studio Code extension that provides real-time file size information directly in your status bar.
+A professional Visual Studio Code extension that provides real-time file size information and insights directly in your status bar with enterprise-grade architecture and advanced customization options.
 
 ## Features
 
-- 📊 Real-time file size monitoring
-- 🔄 Automatic updates when file content changes
-- 📏 Smart size formatting (B, KB, MB)
-- 🎯 Status bar integration with enhanced visibility
-- ⚡ Lightweight and efficient
-- 📁 Support for files up to 1GB
+### Core Functionality
+
+- 📊 **Real-time file size monitoring** with intelligent updates
+- 🔄 **Automatic updates** when file content changes or files are switched
+- 📏 **Smart size formatting** (auto, bytes, KB, MB) with customizable display
+- 🎯 **Advanced status bar integration** with configurable positioning
+- ⚡ **Performance optimized** with debounced updates and minimal resource usage
+- 📁 **Large file support** up to configurable size limits (default 1GB)
+
+### Professional Features
+
+- 🎛️ **Comprehensive configuration system** with real-time updates
+- 📝 **Detailed tooltips** with file information on hover
+- 🔧 **Extensive command palette integration** with categorized commands
+- 📊 **Structured logging** with dedicated output channel for debugging
+- 🏗️ **Enterprise-grade architecture** with separation of concerns
+- 🧪 **Professional test suite** ensuring reliability and quality
 
 ## Installation
 
@@ -40,10 +51,13 @@ The file size is shown in the status bar with a smart format (B, KB, MB) based o
 
 ### Commands
 
-File Insights provides the following commands (accessible via Command Palette `Ctrl+Shift+P` or `Cmd+Shift+P`):
+File Insights provides comprehensive command palette integration (accessible via `Ctrl+Shift+P` or `Cmd+Shift+P`):
 
-- `File insights: Activate` - Manually activate the extension
-- `File insights: Deactivate` - Manually deactivate the extension
+- `File Insights: Enable` - Enable the extension
+- `File Insights: Disable` - Disable the extension  
+- `File Insights: Refresh` - Manually refresh file size information
+- `File Insights: Show Details` - Display detailed file information
+- `File Insights: Show Output Channel` - Open debug logs for troubleshooting
 
 ## Requirements
 
@@ -51,17 +65,71 @@ File Insights provides the following commands (accessible via Command Palette `C
 
 ## Extension Settings
 
-This extension includes the following settings:
+File Insights provides extensive configuration options for customization:
 
-- `fileInsights.sizeFormat`: Customize how file sizes are displayed
+### Core Settings
+
+- `fileInsights.enabled` (boolean, default: `true`) - Enable or disable the extension
+- `fileInsights.displayFormat` (string, default: `"auto"`) - Size display format
+  - `"auto"` - Automatically choose the best format
+  - `"bytes"` - Always show in bytes
+  - `"kb"` - Always show in kilobytes  
+  - `"mb"` - Always show in megabytes
+
+### Display Settings
+
+- `fileInsights.statusBarPosition` (string, default: `"right"`) - Status bar position
+  - `"left"` - Left side of status bar
+  - `"right"` - Right side of status bar
+- `fileInsights.showTooltip` (boolean, default: `true`) - Show detailed tooltip on hover
+
+### Performance Settings
+
+- `fileInsights.refreshInterval` (number, default: `500`) - Refresh interval in milliseconds (100-5000ms)
+- `fileInsights.maxFileSize` (number, default: `1073741824`) - Maximum file size to analyze in bytes (1GB default)
 
 ## Known Issues
 
-Please report any issues on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension/issues).
+Please report any issues on our [GitHub repository](https://github.com/Vijay431/file-insights/issues).
 
 ## Release Notes
 
-### 0.1.0 (Latest)
+### 1.0.0 (Latest)
+
+**Major Release - Complete Architectural Overhaul**
+
+#### New Features
+
+- Modern enterprise-grade architecture with separation of concerns
+- Comprehensive configuration system with real-time updates
+- Advanced status bar management with positioning options
+- Structured logging system with output channel integration
+- Professional test suite with @vscode/test-electron
+- Webpack bundling for optimized production builds
+- Prettier code formatting integration
+- Enhanced command system with detailed categorization
+
+#### Technical Improvements
+
+- ExtensionManager for centralized lifecycle management
+- StatusBarManager for dedicated UI control
+- ConfigurationService for settings integration
+- FileService for file system operations
+- Comprehensive utility modules (formatter, logger)
+- Type definitions for better development experience
+- ESLint configuration with TypeScript support
+- Source maps for debugging support
+
+#### Performance & Reliability
+
+- Complete architectural refactor with manager/service pattern
+- Improved error handling and graceful degradation
+- Enhanced performance with debounced updates
+- Professional TypeScript implementation with strict typing
+- Modernized build system with webpack configuration
+- Updated VS Code API integration for better compatibility
+
+### 0.1.0
 
 - Updated icon and branding assets in cloud rather than local
 
@@ -98,9 +166,50 @@ Initial release of File Insights:
 - Status bar integration
 - Real-time updates
 
+## Architecture
+
+File Insights follows a modern, enterprise-grade architecture with clear separation of concerns:
+
+### Core Components
+
+- **ExtensionManager** - Central coordinator for lifecycle management
+- **StatusBarManager** - Dedicated UI control for status bar interactions
+- **ConfigurationService** - VS Code settings integration with real-time updates
+- **FileService** - File system operations with comprehensive error handling
+
+### Utilities
+
+- **Formatter** - Smart file size formatting with configurable options
+- **Logger** - Structured logging with output channel integration
+- **Type Definitions** - Comprehensive TypeScript interfaces for type safety
+
+### Development
+
+- **Professional Test Suite** - Comprehensive testing with @vscode/test-electron
+- **Webpack Build System** - Optimized production builds with source maps
+- **ESLint + Prettier** - Code quality and formatting standards
+- **TypeScript** - Strict typing for enhanced development experience
+
 ## Contributing
 
-We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/vscode_file-insights_extension).
+We welcome contributions! Please feel free to submit a Pull Request on our [GitHub repository](https://github.com/Vijay431/file-insights).
+
+### Development Setup
+
+1. Clone the repository
+2. Run `npm install` to install dependencies
+3. Run `npm run compile` to build the extension
+4. Press `F5` to launch extension development host
+5. Run `npm test` to execute the test suite
+
+### Available Commands
+
+- `npm run compile` - Compile TypeScript files
+- `npm run watch` - Watch mode for development
+- `npm run package` - Build production bundle
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm test` - Run test suite
 
 ## License
 
@@ -109,7 +218,8 @@ This extension is licensed under the [MIT License](LICENSE).
 ## Developer
 
 - **Vijay Gangatharan**
-- [GitHub Repository](https://github.com/Vijay431/vscode_file-insights_extension)
+- Email: <vijayanand431@gmail.com>
+- [GitHub Repository](https://github.com/Vijay431/file-insights)
 
 ---
 

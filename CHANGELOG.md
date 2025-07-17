@@ -5,6 +5,47 @@ All notable changes to the "File Insights" extension will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2025-07-16
+
+### Added
+
+- Modern enterprise-grade architecture with separation of concerns
+- Comprehensive configuration system with real-time updates
+- Advanced status bar management with positioning options
+- Structured logging system with output channel integration
+- Professional test suite with @vscode/test-electron
+- Webpack bundling for optimized production builds
+- Prettier code formatting integration
+- Enhanced command system with detailed categorization
+
+### Changed
+
+- Complete architectural refactor with manager/service pattern
+- Improved error handling and graceful degradation
+- Enhanced performance with debounced updates
+- Professional TypeScript implementation with strict typing
+- Modernized build system with webpack configuration
+- Updated VS Code API integration for better compatibility
+
+### Technical
+
+- ExtensionManager for centralized lifecycle management
+- StatusBarManager for dedicated UI control
+- ConfigurationService for settings integration
+- FileService for file system operations
+- Comprehensive utility modules (formatter, logger)
+- Type definitions for better development experience
+- ESLint configuration with TypeScript support
+- Source maps for debugging support
+
+### Documentation
+
+- Comprehensive CLAUDE.md with development guidelines
+- Updated README with modern feature descriptions
+- Professional changelog format following Keep a Changelog
+- Detailed architecture documentation
+- Development command reference
+
 ## [0.1.0] - 2024-12-28
 
 ### Changed
