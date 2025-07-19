@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2025-07-17
 
+### Added
+
+- **GitHub Pages Documentation Website** - Professional documentation site with Jekyll
+- **Comprehensive Documentation** - Multiple documentation pages including features, installation, and download guides
+- **Professional Website Design** - Modern, responsive documentation with hero sections and feature highlights
+
 ### Changed
 
 - Updated repository name from `vscode_file-insights_extension` to `file-insights`
@@ -16,9 +22,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Technical
 
+- **GitHub Pages Deployment Workflow** - Automated Jekyll site deployment on pushes to master
+- **Jekyll Documentation Site** - Professional documentation website with custom styling
+- **Ruby/Jekyll Integration** - Complete Jekyll setup with Gemfile and configuration
 - Consolidated CI/CD workflows into a single pipeline
 - Added automated VS Code Marketplace deployment
 - Updated project metadata and configurations
+
+### Documentation
+
+- **Professional Landing Page** - Hero section with extension features and quick start guide
+- **Feature Documentation** - Detailed feature pages with professional presentation
+- **Installation Guides** - Comprehensive installation and setup documentation
+- **Download Center** - Centralized download and installation resources
 
 ## [1.0.0] - 2025-07-16
 
