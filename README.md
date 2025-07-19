@@ -2,6 +2,8 @@
 
 A professional Visual Studio Code extension that provides real-time file size information and insights directly in your status bar with enterprise-grade architecture and advanced customization options.
 
+📖 **[View Full Documentation](https://vijay431.github.io/file-insights/)** | 🚀 **[Quick Start Guide](https://vijay431.github.io/file-insights/installation)** | ✨ **[Feature Overview](https://vijay431.github.io/file-insights/features)**
+
 ## Features
 
 ### Core Functionality
@@ -88,6 +90,16 @@ File Insights provides extensive configuration options for customization:
 - `fileInsights.refreshInterval` (number, default: `500`) - Refresh interval in milliseconds (100-5000ms)
 - `fileInsights.maxFileSize` (number, default: `1073741824`) - Maximum file size to analyze in bytes (1GB default)
 
+## Documentation
+
+📖 **[Complete Documentation Website](https://vijay431.github.io/file-insights/)** - Professional documentation with comprehensive guides
+
+### Quick Links
+
+- 🚀 **[Installation Guide](https://vijay431.github.io/file-insights/installation)** - Step-by-step installation instructions
+- ✨ **[Feature Overview](https://vijay431.github.io/file-insights/features)** - Detailed feature descriptions and screenshots
+- 📥 **[Download Center](https://vijay431.github.io/file-insights/download)** - All download options and resources
+
 ## Known Issues
 
 Please report any issues on our [GitHub repository](https://github.com/Vijay431/file-insights/issues).
@@ -96,13 +108,18 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 
 ### 1.1.0 (Latest)
 
-**Repository Restructuring & Workflow Improvements**
+**GitHub Pages Documentation & Repository Improvements**
 
+- **New Professional Documentation Website** - Complete Jekyll-powered documentation site
+- **GitHub Pages Integration** - Automated deployment with comprehensive guides
+- **Enhanced Documentation** - Feature pages, installation guides, and download center
 - Updated repository structure and naming
 - Enhanced CI/CD workflow with automated deployment
 - Improved documentation and configuration
 - Consolidated development workflows
 - Added automated VS Code Marketplace deployment
+
+🌐 **[Visit Documentation Website](https://vijay431.github.io/file-insights/)**
 
 ### 1.0.0
 
