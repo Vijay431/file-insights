@@ -1,0 +1,100 @@
+# Jekyll Configuration for File Insights GitHub Pages
+
+# Site settings
+title: "File Insights - VS Code Extension"
+email: vijayanand431@gmail.com
+description: >-
+  A professional Visual Studio Code extension that provides real-time file size 
+  information and insights directly in your status bar with enterprise-grade 
+  architecture and advanced customization options.
+
+baseurl: "/file-insights" # the subpath of your site, e.g. /blog
+url: "https://vijay431.github.io" # the base hostname & protocol for your site
+
+# Author
+author:
+  name: "Vijay Gangatharan"
+  email: "vijayanand431@gmail.com"
+  github: "Vijay431"
+
+# Repository
+repository: "Vijay431/file-insights"
+github_username: Vijay431
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - package.json
+  - package-lock.json
+  - webpack.config.js
+  - tsconfig.json
+  - .eslintrc.js
+  - .gitignore
+  - .vscode/
+  - src/
+  - dist/
+  - coverage/
+  - out/
+
+# Site navigation
+navigation:
+  - title: "Home"
+    url: "/"
+  - title: "Features"
+    url: "/features"
+  - title: "Installation"
+    url: "/installation"
+  - title: "Documentation"
+    url: "/documentation"
+  - title: "Download"
+    url: "/download"
+
+# Extension details
+extension:
+  name: "File Insights"
+  version: "1.1.0"
+  marketplace_url: "https://marketplace.visualstudio.com/items?itemName=VijayGangatharan.file-insights"
+  github_url: "https://github.com/Vijay431/file-insights"
+  publisher: "VijayGangatharan"
+  
+# SEO and social
+twitter:
+  username: 
+  card: summary_large_image
+  
+social:
+  name: "Vijay Gangatharan"
+  links:
+    - "https://github.com/Vijay431"
+
+# Analytics (uncomment and add your tracking ID)
+# google_analytics: UA-XXXXXXXXX-X
+
+# Default layouts
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      
+# Sass configuration
+sass:
+  sass_dir: assets/css
+  style: compressed
