@@ -5,6 +5,37 @@ All notable changes to the "File Insights" extension will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2025-07-20
+
+### Added
+
+- **Real-time GitHub Repository Statistics** - Dynamic display of GitHub stars and forks count on homepage
+- **Community Gratitude Section** - Heartfelt appreciation message for users and community contributors
+- **GitHub API Integration** - Real-time repository stats with intelligent caching and error handling
+- **Enhanced Documentation Website** - Improved GitHub Pages with interactive repository statistics
+
+### Changed
+
+- **Improved CI/CD Coverage** - GitHub Actions now run on all branches for comprehensive testing
+- **Enhanced Workflow Security** - Maintained deployment restrictions to master branch only
+- **Better Pull Request Validation** - All PRs now tested before merge regardless of target branch
+- **Responsive Statistics Display** - Mobile-optimized layout for repository stats and community section
+
+### Technical
+
+- **GitHub Stats JavaScript Module** - Dedicated module for fetching and caching repository statistics
+- **Intelligent Caching System** - 10-minute cache with localStorage for GitHub API calls
+- **Enhanced CSS Styling** - New animations, gradients, and responsive design patterns
+- **Workflow Optimization** - CI/CD runs on all branches while keeping secure deployment to master
+- **Performance Improvements** - Debounced updates and optimized loading states for statistics
+
+### Documentation
+
+- **Community Engagement Features** - Prominent star and review buttons for user engagement
+- **Real-time Statistics Display** - Live GitHub repository metrics in hero section
+- **Enhanced User Experience** - Loading states, error handling, and smooth animations
+- **Improved Mobile Experience** - Responsive design for all new features
+
 ## [1.1.0] - 2025-07-17
 
 ### Added
@@ -169,6 +200,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development environment configurations
 - Source control ignore patterns
 
+[1.2.1]: https://github.com/Vijay431/file-insights/releases/tag/v1.2.1
 [1.1.0]: https://github.com/Vijay431/file-insights/releases/tag/v1.1.0
 [1.0.0]: https://github.com/Vijay431/file-insights/releases/tag/v1.0.0
 [0.1.0]: https://github.com/Vijay431/file-insights/releases/tag/v0.1.0

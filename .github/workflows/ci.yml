@@ -2,15 +2,31 @@ name: CI/CD
 
 on:
   push:
-    branches: [master]
+    branches: ['**'] # Run on all branches
   pull_request:
-    branches: [master]
+    branches: ['**'] # Accept PRs targeting any branch
 
 permissions:
   contents: read
 
 jobs:
-  build:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - run: npm ci
+      - run: npm run lint --if-present
+
+  test:
+    needs: [lint]
     runs-on: ubuntu-latest
 
     strategy:
@@ -42,23 +58,8 @@ jobs:
       - name: Run Tests
         run: xvfb-run --auto-servernum npm test
 
-  lint:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18.x'
-          cache: 'npm'
-
-      - run: npm ci
-      - run: npm run lint --if-present
-
   deploy:
-    needs: [build, lint]
+    needs: [test, lint]
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     runs-on: ubuntu-latest
 

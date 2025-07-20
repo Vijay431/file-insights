@@ -2,9 +2,9 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [ master ]
+    branches: ['**']  # Build on all branches for validation
   pull_request:
-    branches: [ master ]
+    branches: ['**']  # Accept PRs targeting any branch
   workflow_dispatch:
 
 permissions:
