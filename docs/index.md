@@ -28,6 +28,14 @@ description: "Display real-time file size information and insights directly in V
                     </a>
                 </div>
                 <div class="hero-stats">
+                    <div class="stat github-stat">
+                        <span class="stat-number" id="github-stars">-</span>
+                        <span class="stat-label">GitHub Stars</span>
+                    </div>
+                    <div class="stat github-stat">
+                        <span class="stat-number" id="github-forks">-</span>
+                        <span class="stat-label">GitHub Forks</span>
+                    </div>
                     <div class="stat">
                         <span class="stat-number">{{ site.extension.version }}</span>
                         <span class="stat-label">Current Version</span>
@@ -35,10 +43,6 @@ description: "Display real-time file size information and insights directly in V
                     <div class="stat">
                         <span class="stat-number">6+</span>
                         <span class="stat-label">Configuration Options</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">5</span>
-                        <span class="stat-label">Command Palette Commands</span>
                     </div>
                 </div>
             </div>
@@ -120,6 +124,44 @@ description: "Display real-time file size information and insights directly in V
                 <p class="feature-description">
                     Comprehensive test suite, structured logging, ESLint + Prettier, and graceful error handling.
                 </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Community Gratitude Section -->
+<section class="community-gratitude">
+    <div class="container">
+        <div class="gratitude-content">
+            <h2 class="gratitude-title">Thank You to Our Amazing Community!</h2>
+            <p class="gratitude-message">
+                If you have downloaded my extension and it helped like anything, I would be happy! 
+                Your support, feedback, and contributions make this project meaningful and drive continuous improvement. 
+                Every star, fork, and piece of feedback motivates me to keep building better tools for developers.
+            </p>
+            <div class="gratitude-stats">
+                <div class="community-stat">
+                    <span class="stat-icon">❤️</span>
+                    <span class="stat-text">Built with love for developers</span>
+                </div>
+                <div class="community-stat">
+                    <span class="stat-icon">🌟</span>
+                    <span class="stat-text">Every star motivates us</span>
+                </div>
+                <div class="community-stat">
+                    <span class="stat-icon">🚀</span>
+                    <span class="stat-text">Growing together as a community</span>
+                </div>
+            </div>
+            <div class="gratitude-actions">
+                <a href="{{ site.extension.github_url }}" class="btn btn-outline" target="_blank">
+                    <i class="fas fa-star"></i>
+                    Star on GitHub
+                </a>
+                <a href="{{ site.extension.marketplace_url }}" class="btn btn-outline" target="_blank">
+                    <i class="fas fa-heart"></i>
+                    Leave a Review
+                </a>
             </div>
         </div>
     </div>
