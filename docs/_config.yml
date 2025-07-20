@@ -68,7 +68,7 @@ navigation:
 # Extension details
 extension:
   name: "File Insights"
-  version: "1.1.0"
+  version: "1.2.1"
   marketplace_url: "https://marketplace.visualstudio.com/items?itemName=VijayGangatharan.file-insights"
   github_url: "https://github.com/Vijay431/file-insights"
   publisher: "VijayGangatharan"

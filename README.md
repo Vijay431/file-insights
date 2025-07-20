@@ -106,7 +106,21 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 
 ## Release Notes
 
-### 1.1.0 (Latest)
+### 1.2.1 (Latest)
+
+**Enhanced Community Features & Improved CI/CD**
+
+- **Real-time GitHub Repository Statistics** - Dynamic display of stars and forks count on homepage
+- **Community Gratitude Section** - Heartfelt appreciation message for users and contributors
+- **Enhanced GitHub API Integration** - Live repository stats with intelligent caching
+- **Improved CI/CD Coverage** - GitHub Actions now run on all branches for comprehensive testing
+- **Enhanced Workflow Security** - Maintained deployment restrictions to master branch only
+- **Better Pull Request Validation** - All PRs tested before merge regardless of target branch
+- **Enhanced User Experience** - Loading states, animations, and mobile-optimized design
+
+🌐 **[Visit Enhanced Documentation Website](https://vijay431.github.io/file-insights/)**
+
+### 1.1.0
 
 **GitHub Pages Documentation & Repository Improvements**
 
@@ -118,8 +132,6 @@ Please report any issues on our [GitHub repository](https://github.com/Vijay431/
 - Improved documentation and configuration
 - Consolidated development workflows
 - Added automated VS Code Marketplace deployment
-
-🌐 **[Visit Documentation Website](https://vijay431.github.io/file-insights/)**
 
 ### 1.0.0
 
