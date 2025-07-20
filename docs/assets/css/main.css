@@ -905,3 +905,195 @@ a:focus {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== GitHub Stats Styling ===== */
+.github-stat .stat-number {
+  color: var(--primary-color);
+  font-weight: 700;
+  position: relative;
+}
+
+.github-stat .stat-number.loading {
+  color: var(--text-muted);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.github-stat .stat-number.error {
+  color: var(--error-color);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ===== Community Gratitude Section ===== */
+.community-gratitude {
+  padding: var(--spacing-xl) 0;
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.community-gratitude::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="1" fill="%23000" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  pointer-events: none;
+}
+
+.gratitude-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.gratitude-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+
+.gratitude-message {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-lg);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gratitude-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.community-stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--bg-primary);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-smooth);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.community-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  filter: grayscale(0) saturate(1.2);
+}
+
+.stat-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.gratitude-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.btn-outline:hover {
+  background: var(--primary-color);
+  color: var(--text-inverse);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
+}
+
+.btn-outline:active {
+  transform: translateY(0);
+}
+
+/* ===== Responsive Design for New Elements ===== */
+@media (max-width: 768px) {
+  .gratitude-title {
+    font-size: 2rem;
+  }
+  
+  .gratitude-message {
+    font-size: 1.1rem;
+  }
+  
+  .gratitude-stats {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  .community-stat {
+    padding: var(--spacing-sm);
+  }
+  
+  .gratitude-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-outline {
+    width: 100%;
+    max-width: 250px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+  
+  .hero-stats .stat {
+    padding: var(--spacing-sm);
+  }
+  
+  .gratitude-title {
+    font-size: 1.75rem;
+  }
+  
+  .gratitude-message {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
