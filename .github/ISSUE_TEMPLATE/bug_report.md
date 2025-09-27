@@ -1,34 +1,45 @@
 ---
 name: Bug report
-about: Create a report to help us improve
+about: Create a report to help us improve File Insights
 title: '[BUG] '
 labels: bug
 assignees: ''
-
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## Bug Description
+Brief description of the issue with file size display or extension functionality.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+## Reproduction Steps
+1. Open VS Code with File Insights extension
+2. Open any file
+3. Observe status bar behavior
+4. See error/unexpected behavior
 
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## Expected vs Actual
+**Expected:** What should happen
+**Actual:** What actually happens
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+## Environment
+- **OS:** Windows/macOS/Linux
+- **VS Code:** Version (e.g., 1.102.0)
+- **Extension:** Version (e.g., 2.0.0)
+- **File Type:** Any file type
+- **File Size:** Approximate size of the problematic file
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## Issue Type (check one)
+- [ ] File size not displaying
+- [ ] Incorrect size calculation
+- [ ] Status bar positioning issues
+- [ ] Format display problems (B/KB/MB/GB)
+- [ ] Configuration not working
+- [ ] Commands not responding
+- [ ] Performance issues
+- [ ] Other: ___________
 
-**Environment (please complete the following information):**
+## Configuration
+- **Display Format:** auto/bytes/kb/mb/gb
+- **Extension Enabled:** Yes/No
+- **Custom Settings:** [paste relevant settings]
 
-- OS: [e.g. Windows, macOS, Linux]
-- VS Code Version: [e.g. 1.85.0]
-- Extension Version: [e.g. 1.0.0]
-
-**Additional context**
-Add any other context about the problem here.
+## Additional Context
+Screenshots, error messages, or other details that help reproduce the issue.

@@ -1,44 +1,59 @@
+# Pull Request - Additional Context Menus
+
 ## Description
-<!-- Provide a brief description of the changes in this PR -->
+### What changed?
+<!-- Brief description of the changes -->
+
+### Why was this change needed?
+<!-- Motivation behind the change -->
 
 ## Type of Change
-
 - [ ] Bug fix
 - [ ] New feature
+- [ ] Code operation enhancement
+- [ ] Framework support improvement
 - [ ] Documentation update
-- [ ] Code refactoring
-- [ ] Other (please describe):
+- [ ] Refactoring
+- [ ] Other: ___________
 
-## Deployment Checklist
+## Testing Checklist
 
-- [ ] Version number updated in package.json
-- [ ] CHANGELOG.md updated with new version and changes
-- [ ] All tests passing
-- [ ] ESLint checks passing
-- [ ] README.md updated (if applicable)
-- [ ] VS Code Marketplace description updated (if applicable)
-- [ ] Extension icon and branding assets updated (if applicable)
-- [ ] GitHub release draft prepared
-- [ ] Marketplace token (PAT) is valid and not expired
+### Framework Testing
+- [ ] Tested with React projects
+- [ ] Tested with Angular projects
+- [ ] Tested with Express projects
+- [ ] Tested with Next.js projects
+- [ ] Tested with TypeScript files (.ts, .tsx)
+- [ ] Tested with JavaScript files (.js, .jsx)
 
-## Development Checklist
+### Core Functionality Testing
+- [ ] Copy Function works and detects functions correctly
+- [ ] Copy to Existing File handles imports properly
+- [ ] Move to Existing File cleans up source file
+- [ ] Save All shows progress feedback
+- [ ] Open in Terminal works (v1.2.0+)
+- [ ] Context menus appear in correct file types
+- [ ] Project detection works (Node.js projects)
 
-- [ ] Code follows project's style guidelines
-- [ ] Changes are properly documented
-- [ ] No unnecessary console logs or debug code
-- [ ] Error handling implemented
-- [ ] Performance impact considered
+### Terminal Testing (v1.2.0+)
+- [ ] Integrated terminal opens correctly
+- [ ] System default terminal works
+- [ ] External terminal configuration works (if applicable)
+- [ ] Directory behaviors work (parent/workspace/current)
+- [ ] Error handling and fallbacks work
 
-## Testing
-
+### Development Quality
+- [ ] Code follows TypeScript strict mode
+- [ ] ESLint checks pass
+- [ ] All tests pass (37/37 expected)
+- [ ] Extension builds successfully (`npm run build`)
 - [ ] Manual testing completed
-- [ ] Tested on Windows
-- [ ] Tested on macOS
-- [ ] Tested on Linux
-- [ ] Tested with different VS Code versions
+- [ ] No unnecessary console logs
 
-## Screenshots
-<!-- If applicable, add screenshots to help explain your changes -->
+## Breaking Changes
+- [ ] This PR introduces breaking changes
+- [ ] Configuration changes required
+- [ ] Migration guide needed
 
 ## Additional Notes
-<!-- Add any additional notes for reviewers -->
+<!-- Any additional context for reviewers -->

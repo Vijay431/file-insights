@@ -1,8 +1,8 @@
 {
   "name": "file-insights",
   "displayName": "File Insights",
-  "description": "Display real-time file size information and insights directly in VS Code's status bar with customizable formatting and smart performance optimization.",
-  "version": "1.2.1",
+  "description": "A lightweight VS Code extension that displays file size in the status bar with automatic formatting for bytes, KB, MB, and GB. Features streamlined architecture and minimal resource usage.",
+  "version": "2.0.0",
   "license": "MIT",
   "publisher": "VijayGangatharan",
   "icon": "logo.png",
@@ -22,13 +22,14 @@
     "file",
     "size",
     "status bar",
-    "analytics",
-    "insights"
+    "lightweight",
+    "formatter"
   ],
   "categories": [
     "Other"
   ],
   "engines": {
+    "node": ">=16.0.0 <25.0.0",
     "vscode": "^1.102.0"
   },
   "activationEvents": [
@@ -44,21 +45,6 @@
       {
         "command": "fileInsights.disable",
         "title": "File Insights: Disable",
-        "category": "File Insights"
-      },
-      {
-        "command": "fileInsights.refresh",
-        "title": "File Insights: Refresh",
-        "category": "File Insights"
-      },
-      {
-        "command": "fileInsights.showDetails",
-        "title": "File Insights: Show Details",
-        "category": "File Insights"
-      },
-      {
-        "command": "fileInsights.showOutputChannel",
-        "title": "File Insights: Show Output Channel",
         "category": "File Insights"
       }
     ],
@@ -76,7 +62,8 @@
             "auto",
             "bytes",
             "kb",
-            "mb"
+            "mb",
+            "gb"
           ],
           "default": "auto",
           "description": "Format for displaying file sizes",
@@ -84,75 +71,59 @@
             "Automatically choose the best format",
             "Always show in bytes",
             "Always show in kilobytes",
-            "Always show in megabytes"
+            "Always show in megabytes",
+            "Always show in gigabytes"
           ]
-        },
-        "fileInsights.statusBarPosition": {
-          "type": "string",
-          "enum": [
-            "left",
-            "right"
-          ],
-          "default": "right",
-          "description": "Position of the status bar item"
-        },
-        "fileInsights.showTooltip": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show detailed tooltip on hover"
-        },
-        "fileInsights.refreshInterval": {
-          "type": "number",
-          "default": 500,
-          "minimum": 100,
-          "maximum": 5000,
-          "description": "Refresh interval in milliseconds"
-        },
-        "fileInsights.maxFileSize": {
-          "type": "number",
-          "default": 1073741824,
-          "minimum": 1048576,
-          "description": "Maximum file size to analyze (in bytes)"
         }
       }
     }
   },
+  "vsce": {
+    "baseImageUrl": "./logo.png",
+    "dependencies": true,
+    "yarn": false
+  },
   "main": "./dist/extension.js",
   "scripts": {
-    "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
-    "pretest": "npm run compile-tests",
-    "compile-tests": "tsc -p . --outDir dist",
-    "watch-tests": "tsc -p . -w --outDir dist",
-    "lint": "eslint src --ext ts",
-    "test": "node ./dist/test/runTest.js",
-    "test:watch": "npm run compile-tests && npm run test",
+    "vscode:prepublish": "tsx esbuild.config.ts --production",
+    "build": "tsx esbuild.config.ts",
+    "watch": "tsx esbuild.config.ts --watch",
+    "package": "vsce package",
+    "publish": "vsce publish",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "test": "rm -rf dist && npm run build && npm run create-minimal && npm run create-fixtures && tsc -p ./tsconfig.test.json && node ./dist/test/e2e/runE2ETest.js",
+    "test:full": "rm -rf dist && npm run build && npm run create-fixtures && tsc -p ./tsconfig.test.json && SKIP_OPTIMIZATION=true node ./dist/test/e2e/runE2ETest.js",
+    "test:minimal": "npm test",
+    "test:clean": "rm -rf .vscode-test/minimal-extension .vscode-test/user-data-isolated .vscode-test/user-data-dev",
+    "create-minimal": "tsx scripts/create-minimal-extension.ts",
+    "create-fixtures": "tsx scripts/create-test-fixtures.ts",
     "format": "prettier --write ."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
-    "@stylistic/eslint-plugin": "^5.2.0",
-    "@types/fs-extra": "^11.0.4",
+    "@stylistic/eslint-plugin": "^5.2.2",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^18.19.119",
+    "@types/node": "^16.18.126",
     "@types/vscode": "^1.102.0",
+    "@typescript-eslint/eslint-plugin": "^8.44.1",
+    "@typescript-eslint/parser": "^8.44.1",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.1",
+    "esbuild": "^0.25.8",
     "eslint": "^9.31.0",
-    "fast-glob": "^3.3.3",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-mocha": "^11.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-security": "^3.0.1",
+    "fast-glob": "^3.3.2",
     "mocha": "^11.7.1",
     "picocolors": "^1.1.1",
     "prettier": "^3.6.2",
-    "terser-webpack-plugin": "^5.3.14",
-    "ts-loader": "^9.5.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.37.0",
-    "webpack": "^5.100.2",
-    "webpack-cli": "^6.0.1"
-  },
-  "dependencies": {
-    "fs-extra": "^11.3.0"
+    "typescript-eslint": "^8.38.0"
   }
 }

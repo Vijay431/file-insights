@@ -2,9 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: ['**']  # Build on all branches for validation
-  pull_request:
-    branches: ['**']  # Accept PRs targeting any branch
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -13,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -22,31 +20,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
           bundler-cache: true
           working-directory: ./docs
-          
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-        
+
       - name: Install dependencies
         run: |
           cd docs
           gem install bundler
           bundle install
-          
+
       - name: Build with Jekyll
         run: |
           cd docs
           bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
-          
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

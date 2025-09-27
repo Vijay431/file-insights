@@ -1,81 +1,93 @@
-import picocolors from 'picocolors';
-import { LogLevel, LoggableValue, NodeEnv } from '../types/common';
+import * as vscode from 'vscode';
+
+export enum LogLevel {
+  Debug = 0,
+  Info = 1,
+  Warn = 2,
+  Error = 3,
+}
 
 export class Logger {
-	private context: string;
+  private static instance: Logger;
+  private outputChannel: vscode.OutputChannel;
+  private logLevel: LogLevel;
 
-	constructor(context: string) {
-		this.context = context;
-	}
+  private constructor() {
+    this.outputChannel = vscode.window.createOutputChannel('File Insights');
+    this.logLevel = LogLevel.Info;
+  }
 
-	info(message: string, ...args: LoggableValue[]): void {
-		this.log('INFO', message, ...args);
-	}
+  public static getInstance(): Logger {
+    Logger.instance ??= new Logger();
+    return Logger.instance;
+  }
 
-	warn(message: string, ...args: LoggableValue[]): void {
-		this.log('WARN', message, ...args);
-	}
+  public setLogLevel(level: LogLevel): void {
+    this.logLevel = level;
+  }
 
-	error(message: string, error?: unknown): void {
-		let errorInfo: string;
-		if (error instanceof Error) {
-			errorInfo = `${error.name}: ${error.message}${error.stack ? `\n${error.stack}` : ''}`;
-		} else if (typeof error === 'string') {
-			errorInfo = error;
-		} else if (error !== undefined) {
-			errorInfo = JSON.stringify(error);
-		} else {
-			errorInfo = 'Unknown error';
-		}
-		this.log('ERROR', message, errorInfo);
-	}
+  public debug(message: string, ...args: unknown[]): void {
+    if (this.logLevel <= LogLevel.Debug) {
+      this.log('DEBUG', message, ...args);
+    }
+  }
 
-	debug(message: string, ...args: LoggableValue[]): void {
-		const nodeEnv = (process.env['NODE_ENV'] as NodeEnv) || 'production';
-		if (nodeEnv === 'development') {
-			this.log('DEBUG', message, ...args);
-		}
-	}
+  public info(message: string, ...args: unknown[]): void {
+    if (this.logLevel <= LogLevel.Info) {
+      this.log('INFO', message, ...args);
+    }
+  }
 
-	private log(level: LogLevel, message: string, ...args: LoggableValue[]): void {
-		const timestamp = new Date().toISOString();
-		const contextStr = picocolors.gray(`[${this.context}]`);
-		
-		let levelColor;
-		switch (level) {
-			case 'INFO':
-				levelColor = picocolors.blue;
-				break;
-			case 'WARN':
-				levelColor = picocolors.yellow;
-				break;
-			case 'ERROR':
-				levelColor = picocolors.red;
-				break;
-			case 'DEBUG':
-				levelColor = picocolors.magenta;
-				break;
-			default:
-				levelColor = picocolors.white;
-		}
-		
-		const levelStr = levelColor(`[${level}]`);
-		const timestampStr = picocolors.gray(`[${timestamp}]`);
-		const formattedMessage = `${timestampStr} ${levelStr} ${contextStr} ${message}`;
-		
-		if (args.length > 0) {
-			console.log(`${formattedMessage} ${JSON.stringify(args)}`);
-		} else {
-			console.log(formattedMessage);
-		}
-	}
+  public warn(message: string, ...args: unknown[]): void {
+    if (this.logLevel <= LogLevel.Warn) {
+      this.log('WARN', message, ...args);
+    }
+  }
 
-	dispose(): void {
-		// No cleanup needed for console.log implementation
-	}
+  public error(message: string, error?: unknown, ...args: unknown[]): void {
+    if (this.logLevel <= LogLevel.Error) {
+      let errorMessage = message;
+      if (error) {
+        errorMessage += ` - ${error instanceof Error ? error.message : String(error)}`;
+      }
+      this.log('ERROR', errorMessage, ...args);
+    }
+  }
 
-	static showOutputChannel(): void {
-		// No output channel to show for console.log implementation
-		console.log(picocolors.cyan('File Insights logs are displayed in the terminal'));
-	}
+  private log(level: string, message: string, ...args: unknown[]): void {
+    const timestamp = new Date().toISOString();
+    const formattedMessage = `[${timestamp}] [${level}] ${message}`;
+
+    if (args.length > 0) {
+      this.outputChannel.appendLine(`${formattedMessage} ${JSON.stringify(args)}`);
+    } else {
+      this.outputChannel.appendLine(formattedMessage);
+    }
+
+    // Also log to console in development
+    if (process.env['NODE_ENV'] === 'development') {
+      switch (level) {
+        case 'DEBUG':
+          console.debug(formattedMessage, ...args);
+          break;
+        case 'INFO':
+          console.info(formattedMessage, ...args);
+          break;
+        case 'WARN':
+          console.warn(formattedMessage, ...args);
+          break;
+        case 'ERROR':
+          console.error(formattedMessage, ...args);
+          break;
+      }
+    }
+  }
+
+  public show(): void {
+    this.outputChannel.show();
+  }
+
+  public dispose(): void {
+    this.outputChannel.dispose();
+  }
 }
