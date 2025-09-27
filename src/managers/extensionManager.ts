@@ -1,172 +1,121 @@
 import * as vscode from 'vscode';
-import { StatusBarManager } from './statusBarManager';
-import { FileService } from '../services/fileService';
+
 import { ConfigurationService } from '../services/configurationService';
 import { Logger } from '../utils/logger';
-import { FileInsightsConfig } from '../types/extension';
+
+import { StatusBarManager } from './statusBarManager';
 
 export class ExtensionManager {
-	private statusBarManager: StatusBarManager;
-	private config: FileInsightsConfig;
-	private disposables: vscode.Disposable[] = [];
-	private updateTimeout: NodeJS.Timeout | null = null;
-	private readonly logger = new Logger('ExtensionManager');
+  private logger: Logger;
+  private configService: ConfigurationService;
+  private statusBarManager: StatusBarManager;
+  private disposables: vscode.Disposable[] = [];
 
-	constructor(context: vscode.ExtensionContext) {
-		this.config = ConfigurationService.getConfiguration();
-		this.statusBarManager = new StatusBarManager(this.config);
-		
-		this.registerCommands(context);
-		this.registerEventListeners();
-		this.registerConfigurationListener();
-		
-		// Initial update
-		this.updateFileStats();
-		
-		this.logger.info('File Insights extension initialized');
-	}
+  constructor() {
+    this.logger = Logger.getInstance();
+    this.configService = ConfigurationService.getInstance();
+    this.statusBarManager = new StatusBarManager();
+  }
 
-	private registerCommands(context: vscode.ExtensionContext): void {
-		const commands = [
-			vscode.commands.registerCommand('fileInsights.enable', () => this.enableExtension()),
-			vscode.commands.registerCommand('fileInsights.disable', () => this.disableExtension()),
-			vscode.commands.registerCommand('fileInsights.refresh', () => this.refreshFileStats()),
-			vscode.commands.registerCommand('fileInsights.showDetails', () => this.showFileDetails()),
-			vscode.commands.registerCommand('fileInsights.showOutputChannel', () => this.showOutputChannel())
-		];
+  public async activate(context: vscode.ExtensionContext): Promise<void> {
+    this.logger.info('Activating File Insights extension');
 
-		commands.forEach(command => {
-			context.subscriptions.push(command);
-			this.disposables.push(command);
-		});
-	}
+    try {
+      // Initialize components
+      await this.initializeComponents();
 
-	private registerEventListeners(): void {
-		// Listen for active editor changes
-		const onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(() => {
-			this.scheduleUpdate();
-		});
+      // Register commands
+      this.registerCommands(context);
 
-		// Listen for document changes
-		const onDidChangeTextDocument = vscode.workspace.onDidChangeTextDocument(event => {
-			const activeEditor = vscode.window.activeTextEditor;
-			if (activeEditor && event.document === activeEditor.document) {
-				this.scheduleUpdate();
-			}
-		});
+      // Register disposables with VS Code context
+      this.disposables.forEach((disposable) => {
+        context.subscriptions.push(disposable);
+      });
 
-		// Listen for document saves
-		const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument(document => {
-			const activeEditor = vscode.window.activeTextEditor;
-			if (activeEditor && document === activeEditor.document) {
-				this.scheduleUpdate();
-			}
-		});
+      // Add our own disposables
+      context.subscriptions.push({ dispose: () => this.dispose() });
 
-		this.disposables.push(
-			onDidChangeActiveTextEditor,
-			onDidChangeTextDocument,
-			onDidSaveTextDocument
-		);
-	}
+      this.logger.info('File Insights extension activated successfully');
 
-	private registerConfigurationListener(): void {
-		const configListener = ConfigurationService.onDidChangeConfiguration(newConfig => {
-			this.config = newConfig;
-			this.statusBarManager.updateConfig(newConfig);
-			this.updateFileStats();
-			this.logger.info('Configuration updated');
-		});
+      // Show activation message (only in debug mode and when enabled)
+      if (process.env['NODE_ENV'] === 'development' && this.configService.isEnabled()) {
+        vscode.window.showInformationMessage('File Insights extension is now active');
+      }
+    } catch (error) {
+      this.logger.error('Failed to activate extension', error);
+      vscode.window.showErrorMessage('Failed to activate File Insights extension');
+      throw error;
+    }
+  }
 
-		this.disposables.push(configListener);
-	}
+  private async initializeComponents(): Promise<void> {
+    try {
+      // Initialize status bar manager
+      this.statusBarManager.initialize();
 
-	private scheduleUpdate(): void {
-		if (this.updateTimeout) {
-			clearTimeout(this.updateTimeout);
-		}
+      this.logger.debug('All components initialized successfully');
+    } catch (error) {
+      this.logger.error('Error initializing components', error);
+      throw error;
+    }
+  }
 
-		this.updateTimeout = setTimeout(() => {
-			this.updateFileStats();
-		}, this.config.refreshInterval);
-	}
+  private registerCommands(context: vscode.ExtensionContext): void {
+    const commands = [
+      vscode.commands.registerCommand(
+        'fileInsights.enable',
+        () => this.configService.enableExtension(),
+      ),
+      vscode.commands.registerCommand(
+        'fileInsights.disable',
+        () => this.configService.disableExtension(),
+      ),
+    ];
 
-	private async updateFileStats(): Promise<void> {
-		try {
-			const activeEditor = vscode.window.activeTextEditor;
-			
-			if (!activeEditor || !FileService.isValidFile(activeEditor.document)) {
-				this.statusBarManager.updateFileStats(null);
-				return;
-			}
+    commands.forEach((command) => {
+      context.subscriptions.push(command);
+      this.disposables.push(command);
+    });
 
-			const result = await FileService.getFileStats(activeEditor.document.uri);
-			if (result.success) {
-				this.statusBarManager.updateFileStats(result.data);
-			} else {
-				this.logger.warn('Failed to get file stats', result.error);
-				this.statusBarManager.updateFileStats(null);
-			}
-		} catch (error: unknown) {
-			this.logger.error('Failed to update file stats', error);
-			this.statusBarManager.updateFileStats(null);
-		}
-	}
+    this.logger.debug('Commands registered successfully');
+  }
 
-	private async enableExtension(): Promise<void> {
-		await vscode.workspace.getConfiguration('fileInsights').update('enabled', true, vscode.ConfigurationTarget.Global);
-		vscode.window.showInformationMessage('File Insights enabled');
-	}
+  public deactivate(): void {
+    this.logger.info('Deactivating File Insights extension');
+    this.dispose();
+  }
 
-	private async disableExtension(): Promise<void> {
-		await vscode.workspace.getConfiguration('fileInsights').update('enabled', false, vscode.ConfigurationTarget.Global);
-		vscode.window.showInformationMessage('File Insights disabled');
-	}
+  private dispose(): void {
+    this.logger.debug('Disposing ExtensionManager');
 
-	private refreshFileStats(): void {
-		this.updateFileStats();
-		vscode.window.showInformationMessage('File statistics refreshed');
-	}
+    // Dispose status bar manager
+    this.statusBarManager.dispose();
 
-	private showOutputChannel(): void {
-		Logger.showOutputChannel();
-	}
+    // Dispose all registered disposables
+    this.disposables.forEach((disposable) => {
+      try {
+        disposable.dispose();
+      } catch (error) {
+        this.logger.warn('Error disposing resource', error);
+      }
+    });
 
-	private async showFileDetails(): Promise<void> {
-		const activeEditor = vscode.window.activeTextEditor;
-		if (!activeEditor || !FileService.isValidFile(activeEditor.document)) {
-			vscode.window.showWarningMessage('No valid file is currently open');
-			return;
-		}
+    this.disposables = [];
 
-		const result = await FileService.getFileStats(activeEditor.document.uri);
-		if (!result.success) {
-			vscode.window.showErrorMessage(`Unable to retrieve file statistics: ${result.error}`);
-			return;
-		}
+    // Dispose logger last
+    this.logger.dispose();
+  }
 
-		const stats = result.data;
-		const items = [
-			`File Path: ${stats.path}`,
-			`File Size: ${stats.size} bytes`,
-			`Last Modified: ${stats.lastModified.toLocaleString()}`
-		];
+  // Public API for testing or external access
+  public getStatusBarManager(): StatusBarManager {
+    return this.statusBarManager;
+  }
 
-		vscode.window.showQuickPick(items, {
-			placeHolder: 'File Details',
-			canPickMany: false
-		});
-	}
+  public getConfigurationService(): ConfigurationService {
+    return this.configService;
+  }
 
-	dispose(): void {
-		if (this.updateTimeout) {
-			clearTimeout(this.updateTimeout);
-		}
-
-		this.statusBarManager.dispose();
-		this.disposables.forEach(disposable => disposable.dispose());
-		this.logger.dispose();
-		
-		this.logger.info('File Insights extension disposed');
-	}
+  public isActive(): boolean {
+    return this.configService.isEnabled();
+  }
 }

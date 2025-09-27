@@ -41,7 +41,7 @@ description: "Display real-time file size information and insights directly in V
                         <span class="stat-label">Current Version</span>
                     </div>
                     <div class="stat">
-                        <span class="stat-number">6+</span>
+                        <span class="stat-number">2</span>
                         <span class="stat-label">Configuration Options</span>
                     </div>
                 </div>
@@ -80,9 +80,9 @@ description: "Display real-time file size information and insights directly in V
                 <div class="feature-icon">
                     <i class="fas fa-cog"></i>
                 </div>
-                <h3 class="feature-title">Advanced Configuration</h3>
+                <h3 class="feature-title">Simple Configuration</h3>
                 <p class="feature-description">
-                    6+ customizable settings including display format, status bar positioning, refresh intervals, and file size limits.
+                    2 essential settings: enable/disable extension and display format selection for optimal simplicity.
                 </p>
             </div>
             
@@ -90,9 +90,9 @@ description: "Display real-time file size information and insights directly in V
                 <div class="feature-icon">
                     <i class="fas fa-building"></i>
                 </div>
-                <h3 class="feature-title">Enterprise Architecture</h3>
+                <h3 class="feature-title">Streamlined Architecture</h3>
                 <p class="feature-description">
-                    Modern separation of concerns with ExtensionManager, StatusBarManager, ConfigurationService, and FileService.
+                    Clean separation of concerns with focused managers and services for maintainable, efficient code.
                 </p>
             </div>
             
@@ -102,7 +102,7 @@ description: "Display real-time file size information and insights directly in V
                 </div>
                 <h3 class="feature-title">Command Palette Integration</h3>
                 <p class="feature-description">
-                    5 professional commands for enabling, disabling, refreshing, showing details, and accessing debug logs.
+                    2 simple commands for enabling and disabling the extension, keeping it focused and user-friendly.
                 </p>
             </div>
             
@@ -112,7 +112,7 @@ description: "Display real-time file size information and insights directly in V
                 </div>
                 <h3 class="feature-title">Performance Optimized</h3>
                 <p class="feature-description">
-                    Webpack bundling, TypeScript strict mode, and intelligent caching for minimal resource usage.
+                    esbuild bundling, TypeScript strict mode, and efficient file operations for minimal resource usage.
                 </p>
             </div>
             
