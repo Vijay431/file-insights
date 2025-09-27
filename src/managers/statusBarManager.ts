@@ -1,108 +1,119 @@
 import * as vscode from 'vscode';
-import { FileInsightsConfig, FileStats, FormattedSize } from '../types/extension';
+
+import { ConfigurationService } from '../services/configurationService';
+import { FileStatsService } from '../services/fileStatsService';
+import { FileStats } from '../types/extension';
 import { SizeFormatter } from '../utils/formatter';
 import { Logger } from '../utils/logger';
 
 export class StatusBarManager {
-	private statusBarItem: vscode.StatusBarItem | null = null;
-	private config: FileInsightsConfig;
-	private readonly logger = new Logger('StatusBarManager');
+  private statusBarItem: vscode.StatusBarItem;
+  private configService: ConfigurationService;
+  private fileStatsService: FileStatsService;
+  private logger: Logger;
+  private disposables: vscode.Disposable[] = [];
+  private updateTimeout: NodeJS.Timeout | null = null;
 
-	constructor(config: FileInsightsConfig) {
-		this.config = config;
-		this.createStatusBarItem();
-	}
+  constructor() {
+    this.configService = ConfigurationService.getInstance();
+    this.fileStatsService = FileStatsService.getInstance();
+    this.logger = Logger.getInstance();
+    this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 0);
 
-	updateConfig(config: FileInsightsConfig): void {
-		this.config = config;
-		this.updateStatusBarPosition();
-		
-		if (!config.enabled) {
-			this.hide();
-		}
-	}
+    this.logger.info('StatusBarManager initialized');
+  }
 
-	updateFileStats(stats: FileStats | null): void {
-		if (!this.config.enabled || !stats) {
-			this.hide();
-			return;
-		}
+  public initialize(): void {
+    this.registerEventListeners();
+    this.registerConfigurationListener();
 
-		try {
-			if (stats.size > this.config.maxFileSize) {
-				this.showMessage('File too large to analyze');
-				return;
-			}
+    // Initial update
+    void this.updateFileStats();
 
-			const formattedSize = SizeFormatter.formatSize(stats.size, this.config);
-			this.showFileSize(formattedSize, stats);
-		} catch (error: unknown) {
-			this.logger.error('Failed to update file stats display', error);
-			this.hide();
-		}
-	}
+    this.logger.debug('StatusBarManager event listeners registered');
+  }
 
-	private createStatusBarItem(): void {
-		const alignment = this.config.statusBarPosition === 'left' 
-			? vscode.StatusBarAlignment.Left 
-			: vscode.StatusBarAlignment.Right;
-		
-		this.statusBarItem = vscode.window.createStatusBarItem(alignment, 100);
-		this.statusBarItem.command = 'fileInsights.showDetails';
-	}
+  private registerEventListeners(): void {
+    const onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(() => {
+      this.logger.debug('Active text editor changed');
+      void this.updateFileStats();
+    });
 
-	private updateStatusBarPosition(): void {
-		if (this.statusBarItem) {
-			this.statusBarItem.dispose();
-			this.createStatusBarItem();
-		}
-	}
+    const onDidSaveTextDocument = vscode.workspace.onDidSaveTextDocument((document) => {
+      const activeEditor = vscode.window.activeTextEditor;
+      if (activeEditor && document === activeEditor.document) {
+        this.logger.debug('Active document saved');
+        void this.updateFileStats();
+      }
+    });
 
-	private showFileSize(size: FormattedSize, stats: FileStats): void {
-		if (!this.statusBarItem) {
-			return;
-		}
+    this.disposables.push(onDidChangeActiveTextEditor, onDidSaveTextDocument);
+  }
 
-		this.statusBarItem.text = `$(file) ${size.formatted}`;
-		
-		if (this.config.showTooltip) {
-			this.statusBarItem.tooltip = SizeFormatter.createTooltip(
-				size, 
-				stats.path, 
-				stats.lastModified
-			);
-		}
-		
-		this.statusBarItem.show();
-		this.logger.debug(`Updated status bar: ${size.formatted}`);
-	}
+  private registerConfigurationListener(): void {
+    const configListener = this.configService.onConfigurationChanged(() => {
+      this.logger.debug('Configuration changed, updating status bar');
+      void this.updateFileStats();
+    });
 
-	private showMessage(message: string): void {
-		if (!this.statusBarItem) {
-			return;
-		}
+    this.disposables.push(configListener);
+  }
 
-		this.statusBarItem.text = `$(warning) ${message}`;
-		this.statusBarItem.tooltip = message;
-		this.statusBarItem.show();
-	}
+  private async updateFileStats(): Promise<void> {
+    try {
+      if (!this.configService.isEnabled()) {
+        this.logger.debug('Extension disabled, hiding status bar');
+        this.statusBarItem.hide();
+        return;
+      }
 
-	hide(): void {
-		if (this.statusBarItem) {
-			this.statusBarItem.hide();
-		}
-	}
+      const fileStats = await this.fileStatsService.getCurrentFileStats();
 
-	show(): void {
-		if (this.statusBarItem && this.config.enabled) {
-			this.statusBarItem.show();
-		}
-	}
+      if (fileStats) {
+        this.displayFileStats(fileStats);
+      } else {
+        this.logger.debug('No valid file stats available, hiding status bar');
+        this.statusBarItem.hide();
+      }
+    } catch (error: unknown) {
+      this.logger.error('Error updating file stats', error);
+      this.statusBarItem.hide();
+    }
+  }
 
-	dispose(): void {
-		if (this.statusBarItem) {
-			this.statusBarItem.dispose();
-			this.statusBarItem = null;
-		}
-	}
+  private displayFileStats(fileStats: FileStats): void {
+    const config = this.configService.getConfiguration();
+    const formattedSize = SizeFormatter.formatSize(fileStats.size, config);
+
+    this.statusBarItem.text = `$(file) ${formattedSize.formatted}`;
+    this.statusBarItem.tooltip = SizeFormatter.createTooltip(
+      formattedSize,
+      fileStats.path,
+      fileStats.lastModified,
+    );
+
+    this.statusBarItem.show();
+
+    this.logger.debug(`Status bar updated: ${formattedSize.formatted} for ${fileStats.path}`);
+  }
+
+  public show(): void {
+    this.statusBarItem.show();
+  }
+
+  public hide(): void {
+    this.statusBarItem.hide();
+  }
+
+  public dispose(): void {
+    this.logger.debug('Disposing StatusBarManager');
+
+    if (this.updateTimeout) {
+      clearTimeout(this.updateTimeout);
+    }
+
+    this.statusBarItem.dispose();
+    this.disposables.forEach((disposable) => disposable.dispose());
+    this.disposables = [];
+  }
 }

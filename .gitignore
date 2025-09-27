@@ -6,6 +6,16 @@ dist
 node_modules
 out
 
+.mcp.json
+
+blogs
+
 CLAUDE.md
 .claude
 TODO.md
+
+# Test fixture files (generated during testing)
+test/fixtures/*.txt
+
+#Ignore vscode AI rules
+.github\instructions\codacy.instructions.md

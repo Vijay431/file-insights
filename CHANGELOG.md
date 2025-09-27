@@ -5,6 +5,52 @@ All notable changes to the "File Insights" extension will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-09-26
+
+### BREAKING CHANGES
+
+- **Architecture Simplification** - Streamlined to focused managers and services
+- **Dependency Removal** - Eliminated external dependencies (fs-extra)
+- **Configuration Simplification** - Reduced to essential settings only
+- **Command Reduction** - Simplified to only enable/disable commands
+
+### Added
+
+- **GB File Size Support** - Added gigabyte formatting for large files
+- **Focused E2E Testing** - New test suite with 6 specific test scenarios:
+  1. Extension activation
+  2. Extension deactivation
+  3. No file detection (status bar hidden)
+  4. KB-sized file format display
+  5. MB-sized file format display
+  6. GB-sized file format display
+- **Internal Module Usage** - Switched to Node.js built-in `fs` module from fs-extra
+- **Low Priority Status Bar** - File size displays with low priority positioning
+
+### Changed
+
+- **Streamlined Managers** - Focused ExtensionManager and StatusBarManager for clear responsibilities
+- **Performance Optimization** - Reduced memory usage and startup time
+- **Code Architecture** - Simplified services while maintaining separation of concerns
+- **Service Integration** - Clean integration between configuration, file stats, and UI components
+
+### Removed
+
+- **Telemetry System** - Removed all telemetry and analytics features
+- **Health Monitoring** - Removed health monitoring and performance tracking
+- **Plugin System** - Removed plugin architecture and management
+- **Complex Configuration** - Removed excessive configuration options
+- **Complex V1 Services** - Removed overcomplicated V1 architecture and services
+- **Excessive Logging** - Simplified logging infrastructure
+- **Unnecessary Abstractions** - Removed over-engineered components
+
+### Technical
+
+- **Bundle Size Reduction** - Significantly smaller extension package
+- **Dependency Count** - Reduced to minimal VS Code API and Node.js built-ins only
+- **Test Simplification** - Streamlined test suite focusing on core functionality
+- **Build Process** - Maintained esbuild for fast compilation
+
 ## [1.2.1] - 2025-07-20
 
 ### Added

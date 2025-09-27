@@ -96,10 +96,10 @@ description: "Explore the comprehensive features and enterprise-grade capabiliti
                         <i class="fas fa-cogs"></i>
                     </div>
                     <div class="feature-content">
-                        <h3 class="feature-name">Comprehensive Configuration System</h3>
+                        <h3 class="feature-name">Simple Configuration System</h3>
                         <p class="feature-desc">
-                            Extensive configuration options with real-time updates, allowing complete customization 
-                            of behavior and appearance without requiring VS Code restart.
+                            Essential configuration options with real-time updates, focusing on the most
+                            important settings without overwhelming complexity.
                         </p>
                         <div class="config-table">
                             <table>
@@ -122,31 +122,7 @@ description: "Explore the comprehensive features and enterprise-grade capabiliti
                                         <td><code>fileInsights.displayFormat</code></td>
                                         <td>String</td>
                                         <td>auto</td>
-                                        <td>Size display format</td>
-                                    </tr>
-                                    <tr>
-                                        <td><code>fileInsights.statusBarPosition</code></td>
-                                        <td>String</td>
-                                        <td>right</td>
-                                        <td>Status bar position</td>
-                                    </tr>
-                                    <tr>
-                                        <td><code>fileInsights.showTooltip</code></td>
-                                        <td>Boolean</td>
-                                        <td>true</td>
-                                        <td>Show detailed tooltips</td>
-                                    </tr>
-                                    <tr>
-                                        <td><code>fileInsights.refreshInterval</code></td>
-                                        <td>Number</td>
-                                        <td>500</td>
-                                        <td>Refresh interval (ms)</td>
-                                    </tr>
-                                    <tr>
-                                        <td><code>fileInsights.maxFileSize</code></td>
-                                        <td>Number</td>
-                                        <td>1GB</td>
-                                        <td>Maximum file size</td>
+                                        <td>Size display format (auto, bytes, kb, mb, gb)</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -161,8 +137,8 @@ description: "Explore the comprehensive features and enterprise-grade capabiliti
                     <div class="feature-content">
                         <h3 class="feature-name">Command Palette Integration</h3>
                         <p class="feature-desc">
-                            Professional command palette integration with categorized commands for complete 
-                            extension control and troubleshooting capabilities.
+                            Simple command palette integration with essential commands for
+                            basic extension control.
                         </p>
                         <div class="command-grid">
                             <div class="command-card">
@@ -172,18 +148,6 @@ description: "Explore the comprehensive features and enterprise-grade capabiliti
                             <div class="command-card">
                                 <h4><i class="fas fa-pause"></i> File Insights: Disable</h4>
                                 <p>Temporarily disable extension functionality</p>
-                            </div>
-                            <div class="command-card">
-                                <h4><i class="fas fa-refresh"></i> File Insights: Refresh</h4>
-                                <p>Manually refresh file size information</p>
-                            </div>
-                            <div class="command-card">
-                                <h4><i class="fas fa-info"></i> File Insights: Show Details</h4>
-                                <p>Display comprehensive file information dialog</p>
-                            </div>
-                            <div class="command-card">
-                                <h4><i class="fas fa-bug"></i> File Insights: Show Output Channel</h4>
-                                <p>Open debug logs for troubleshooting</p>
                             </div>
                         </div>
                     </div>
