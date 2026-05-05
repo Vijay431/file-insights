@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { FileInsightsConfig } from '../../src/types/extension';
 
 /**
  * Test fixture configuration for File Insights extension testing
@@ -107,4 +108,72 @@ export async function cleanupTestFiles(fileUris: vscode.Uri[]): Promise<void> {
   });
 
   await Promise.all(cleanupPromises);
+}
+
+/**
+ * Interface for exported settings structure
+ */
+export interface ExportedSettings {
+  version: string;
+  exportedAt: string;
+  settings: Partial<FileInsightsConfig>;
+}
+
+/**
+ * Create a mock settings JSON file in the workspace for testing import
+ */
+export async function createSettingsFile(
+  workspaceUri: vscode.Uri,
+  fileName: string,
+  settings: Partial<FileInsightsConfig>
+): Promise<vscode.Uri> {
+  const fileUri = vscode.Uri.joinPath(workspaceUri, fileName);
+
+  const exportedSettings: ExportedSettings = {
+    version: '2.0.0',
+    exportedAt: new Date().toISOString(),
+    settings,
+  };
+
+  const content = JSON.stringify(exportedSettings, null, 2);
+  const encoder = new TextEncoder();
+  await vscode.workspace.fs.writeFile(fileUri, encoder.encode(content));
+
+  return fileUri;
+}
+
+/**
+ * Create a file with invalid JSON for testing error handling
+ */
+export async function createInvalidJsonFile(
+  workspaceUri: vscode.Uri,
+  fileName: string,
+  content: string
+): Promise<vscode.Uri> {
+  const fileUri = vscode.Uri.joinPath(workspaceUri, fileName);
+  const encoder = new TextEncoder();
+  await vscode.workspace.fs.writeFile(fileUri, encoder.encode(content));
+  return fileUri;
+}
+
+/**
+ * Read and parse an exported settings file
+ */
+export async function readExportedSettings(uri: vscode.Uri): Promise<ExportedSettings> {
+  const content = await vscode.workspace.fs.readFile(uri);
+  const decoder = new TextDecoder('utf-8');
+  const text = decoder.decode(content);
+  return JSON.parse(text) as ExportedSettings;
+}
+
+/**
+ * Verify a file exists and is readable
+ */
+export async function fileExists(uri: vscode.Uri): Promise<boolean> {
+  try {
+    await vscode.workspace.fs.stat(uri);
+    return true;
+  } catch {
+    return false;
+  }
 }

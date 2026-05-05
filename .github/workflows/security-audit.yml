@@ -9,7 +9,7 @@ on:
     branches: ['master']
     paths:
       - 'package.json'
-      - 'package-lock.json'
+      - 'pnpm-lock.yaml'
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   security-audit:
-    name: NPM Security Audit
+    name: PNPM Security Audit
     runs-on: ubuntu-latest
 
     steps:
@@ -31,22 +31,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-          cache: 'npm'
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install
 
       - name: Run Security Audit
         id: audit
         run: |
-          echo "Running npm audit..."
-          npm audit --json > audit-results.json || true
+          echo "Running pnpm audit..."
+          pnpm audit --json > audit-results.json || true
 
-          # Count vulnerabilities by severity
-          HIGH=$(jq '.vulnerabilities | to_entries | map(select(.value.severity == "high")) | length' audit-results.json)
-          MODERATE=$(jq '.vulnerabilities | to_entries | map(select(.value.severity == "moderate")) | length' audit-results.json)
-          LOW=$(jq '.vulnerabilities | to_entries | map(select(.value.severity == "low")) | length' audit-results.json)
-          CRITICAL=$(jq '.vulnerabilities | to_entries | map(select(.value.severity == "critical")) | length' audit-results.json)
+          # Count vulnerabilities by severity (pnpm uses different JSON structure)
+          HIGH=$(jq '.metadata.vulnerabilities.high // 0' audit-results.json)
+          MODERATE=$(jq '.metadata.vulnerabilities.moderate // 0' audit-results.json)
+          LOW=$(jq '.metadata.vulnerabilities.low // 0' audit-results.json)
+          CRITICAL=$(jq '.metadata.vulnerabilities.critical // 0' audit-results.json)
 
           echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
           echo "high=$HIGH" >> $GITHUB_OUTPUT
@@ -70,9 +73,9 @@ jobs:
         id: outdated
         run: |
           echo "Checking for outdated packages..."
-          npm outdated --json > outdated-packages.json || true
+          pnpm outdated --json > outdated-packages.json || true
 
-          # Count outdated packages
+          # Count outdated packages (pnpm has different JSON structure)
           OUTDATED_COUNT=$(jq '. | length' outdated-packages.json)
           echo "outdated_count=$OUTDATED_COUNT" >> $GITHUB_OUTPUT
 
@@ -90,23 +93,16 @@ jobs:
         run: |
           echo "Attempting to fix vulnerabilities automatically..."
 
-          # Try to fix vulnerabilities
-          npm audit fix --dry-run > fix-preview.txt 2>&1 || true
+          # Try to fix vulnerabilities (pnpm uses update instead of audit fix)
+          echo "Checking for available updates..."
+          pnpm update --latest > fix-results.txt 2>&1 || true
 
-          # Check if fixes are available
-          if grep -q "fixed" fix-preview.txt; then
-            echo "auto_fixes_available=true" >> $GITHUB_OUTPUT
-            npm audit fix > fix-results.txt 2>&1 || true
-
-            # Check if package-lock.json was modified
-            if git diff --quiet package-lock.json; then
-              echo "fixes_applied=false" >> $GITHUB_OUTPUT
-            else
-              echo "fixes_applied=true" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "auto_fixes_available=false" >> $GITHUB_OUTPUT
+          # Check if pnpm-lock.yaml was modified
+          if git diff --quiet pnpm-lock.yaml; then
             echo "fixes_applied=false" >> $GITHUB_OUTPUT
+          else
+            echo "fixes_applied=true" >> $GITHUB_OUTPUT
+            echo "auto_fixes_available=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Create Pull Request for Security Fixes
@@ -114,12 +110,12 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: 'security: automated npm audit fix'
+          commit-message: 'security: automated pnpm update'
           title: '🔒 Automated Security Updates'
           body: |
             ## Automated Security Updates
 
-            This PR contains automated fixes for npm security vulnerabilities detected during the daily security audit.
+            This PR contains automated fixes for pnpm security vulnerabilities detected during the daily security audit.
 
             ### Security Audit Results
             $(cat audit-summary.md)
@@ -162,7 +158,7 @@ jobs:
             ## Next Steps
 
             1. **Immediate Action Required**: Review and address critical and high-severity vulnerabilities
-            2. **Update Dependencies**: Run \`npm update\` and \`npm audit fix\` manually
+            2. **Update Dependencies**: Run \`pnpm update\` to update dependencies manually
             3. **Test Thoroughly**: Ensure all functionality works after updates
             4. **Security Review**: Consider additional security measures if needed
 

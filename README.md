@@ -82,10 +82,10 @@ The file size appears in the status bar (right side, low priority) with format:
 ### Building
 
 ```bash
-npm run build        # Build extension
-npm run watch        # Development mode
-npm test            # Run E2E tests
-npm run package     # Create VSIX package
+pnpm run build        # Build extension
+pnpm run watch        # Development mode
+pnpm test            # Run E2E tests
+pnpm run package     # Create VSIX package
 ```
 
 ### Testing
@@ -100,7 +100,7 @@ The extension includes 6 focused E2E tests:
 6. GB-sized file format display
 
 ```bash
-npm test            # Run all tests
+pnpm test            # Run all tests
 ```
 
 ## Architecture
@@ -136,7 +136,7 @@ src/
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Run tests (`npm test`)
+4. Run tests (`pnpm test`)
 5. Commit changes (`git commit -m 'Add amazing feature'`)
 6. Push to branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request

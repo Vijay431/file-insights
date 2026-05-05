@@ -23,7 +23,7 @@ By participating in this project, you are expected to uphold our [Code of Conduc
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (version 18 or higher)
-- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [pnpm](https://pnpm.io/) (fast, disk space efficient package manager)
 - [Visual Studio Code](https://code.visualstudio.com/) (for development and testing)
 - [Git](https://git-scm.com/)
 
@@ -53,29 +53,29 @@ We welcome several types of contributions:
 ### 2. Install Dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### 3. Development Commands
 
 ```bash
 # Compile TypeScript
-npm run compile
+pnpm run compile
 
 # Watch mode for development
-npm run watch
+pnpm run watch
 
 # Build production bundle
-npm run package
+pnpm run package
 
 # Run tests
-npm test
+pnpm test
 
 # Run linter
-npm run lint
+pnpm run lint
 
 # Format code
-npm run format
+pnpm run format
 ```
 
 ### 4. Launch Development Environment
@@ -166,10 +166,10 @@ When making changes:
 3. **Run Quality Checks**:
 
    ```bash
-   npm run lint
-   npm run format
-   npm test
-   npm run compile
+   pnpm run lint
+   pnpm run format
+   pnpm test
+   pnpm run compile
    ```
 
 4. **Create Pull Request** with:
@@ -208,7 +208,7 @@ When creating a PR, please fill out the template with:
 ### Code Formatting
 
 - Use **Prettier** for consistent formatting
-- Run `npm run format` before committing
+- Run `pnpm run format` before committing
 - Use **2 spaces** for indentation
 - Use **semicolons** at line endings
 - Use **single quotes** for strings
@@ -232,13 +232,13 @@ When creating a PR, please fill out the template with:
 
 ```bash
 # Run all tests
-npm test
+pnpm test
 
 # Run tests in watch mode
-npm run test:watch
+pnpm run test:watch
 
 # Compile test files
-npm run compile-tests
+pnpm run compile-tests
 ```
 
 ### Writing Tests

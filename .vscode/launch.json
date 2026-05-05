@@ -10,7 +10,7 @@
       "args": ["--extensionDevelopmentPath=${workspaceRoot}"],
       "sourceMaps": true,
       "outFiles": ["${workspaceRoot}/dist/**/*.js"],
-      "preLaunchTask": "npm: watch"
+      "preLaunchTask": "pnpm: watch"
     },
     {
       "name": "Launch Extension (Minimal)",
@@ -26,7 +26,7 @@
       ],
       "sourceMaps": true,
       "outFiles": ["${workspaceRoot}/.vscode-test/minimal-extension/dist/**/*.js"],
-      "preLaunchTask": "npm: create-minimal"
+      "preLaunchTask": "pnpm: create-minimal"
     }
   ]
 }

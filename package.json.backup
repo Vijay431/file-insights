@@ -1,29 +1,40 @@
 {
   "name": "file-insights",
   "displayName": "File Insights",
-  "description": "Display file size in status bar with automatic formatting and advanced metrics",
+  "description": "A lightweight VS Code extension that displays file size in the status bar with automatic formatting for bytes, KB, MB, and GB. Features streamlined architecture and minimal resource usage.",
   "version": "2.0.0",
-  "publisher": "anomalyco",
-  "engines": {
-    "vscode": "^1.102.0"
+  "license": "MIT",
+  "publisher": "VijayGangatharan",
+  "icon": "logo.png",
+  "author": {
+    "name": "Vijay Gangatharan",
+    "email": "vijayanand431@gmail.com"
   },
-  "icon": "resources/icon.png",
-  "categories": [
-    "Other"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vijay431/file-insights.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Vijay431/file-insights/issues"
+  },
+  "homepage": "https://github.com/Vijay431/file-insights#readme",
   "keywords": [
     "file",
     "size",
-    "insights",
-    "metadata",
-    "encoding",
-    "line count",
-    "character count"
+    "status bar",
+    "lightweight",
+    "formatter"
   ],
+  "categories": [
+    "Other"
+  ],
+  "engines": {
+    "node": ">=16.0.0 <25.0.0",
+    "vscode": "^1.102.0"
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
-  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -82,17 +93,17 @@
         "fileInsights.colorCoding.thresholds.yellow": {
           "type": "string",
           "default": "100KB",
-          "description": "File size threshold for yellow color (e.g., '100KB')"
+          "description": "File size threshold for yellow color (e.g., '100KB', '1MB')"
         },
         "fileInsights.colorCoding.thresholds.orange": {
           "type": "string",
           "default": "1MB",
-          "description": "File size threshold for orange level"
+          "description": "File size threshold for orange color"
         },
         "fileInsights.colorCoding.thresholds.red": {
           "type": "string",
           "default": "10MB",
-          "description": "File size threshold for red level"
+          "description": "File size threshold for red color"
         },
         "fileInsights.colorCoding.colors.green": {
           "type": "string",
@@ -112,7 +123,7 @@
         "fileInsights.colorCoding.colors.red": {
           "type": "string",
           "default": "errorForeground",
-          "description": "theme color for very large files (red)"
+          "description": "Theme color for very large files (red)"
         },
         "fileInsights.statusBar.alignment": {
           "type": "string",
@@ -128,15 +139,20 @@
           "default": 0,
           "description": "Status bar priority (higher numbers appear first)"
         },
-        "fileInsights.statusBar.hideIfExceeds": {
+        "fileInsights.sizeWarnings.showNotification": {
           "type": "boolean",
-          "default": false,
-          "description": "Hide status bar if file exceeds threshold"
+          "default": true,
+          "description": "Show notification for size warnings"
         },
-        "fileInsights.statusBar.hideThreshold": {
-          "type": "string",
-          "default": "100MB",
-          "description": "File size threshold for hiding status bar (e.g., '100MB')"
+        "fileInsights.deltaDisplay.showDeltaIndicator": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show delta indicator (↑↓) in status bar"
+        },
+        "fileInsights.deltaDisplay.showDeltaInTooltip": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show delta information in tooltip"
         },
         "fileInsights.metadataDisplay.showLineCount": {
           "type": "boolean",
@@ -162,64 +178,17 @@
           "type": "boolean",
           "default": true,
           "description": "Show relative path in tooltip"
-        },
-        "fileInsights.sizeWarnings.enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "Enable size warnings"
-        },
-        "fileInsights.sizeWarnings.thresholds.yellow": {
-          "type": "string",
-          "default": "100KB",
-          "description": "Warning threshold for yellow level (e.g., '100KB')"
-        },
-        "fileInsights.sizeWarnings.thresholds.orange": {
-          "type": "string",
-          "default": "1MB",
-          "description": "Warning threshold for orange level"
-        },
-        "fileInsights.sizeWarnings.thresholds.red": {
-          "type": "string",
-          "default": "10MB",
-          "description": "Warning threshold for red level"
-        },
-        "fileInsights.sizeWarnings.notificationFrequency": {
-          "type": "string",
-          "enum": [
-            "once",
-            "always",
-            "daily"
-          ],
-          "default": "always",
-          "description": "How often to show warnings",
-          "enumDescriptions": [
-            "Warn once per file",
-            "Always warn when opening file",
-            "Warn at most once per day"
-          ]
-        },
-        "fileInsights.sizeWarnings.showNotification": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show notification for size warnings"
-        },
-        "fileInsights.deltaDisplay.showDeltaIndicator": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show delta indicator (↑) in status bar"
-        },
-        "fileInsights.deltaDisplay.showDeltaInTooltip": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show delta information in tooltip"
         }
+      }
       }
     }
   },
   "vsce": {
     "baseImageUrl": "./logo.png",
-    "dependencies": true
+    "dependencies": true,
+    "yarn": false
   },
+  "main": "./dist/extension.js",
   "scripts": {
     "vscode:prepublish": "tsx esbuild.config.ts --production",
     "build": "tsx esbuild.config.ts",
@@ -228,9 +197,9 @@
     "publish": "vsce publish",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "test": "tsx scripts/cleanup.ts dist && pnpm run build && pnpm run create-minimal && pnpm run create-fixtures && tsc -p ./tsconfig.test.json && node ./dist/test/e2e/runE2ETest.js",
-    "test:full": "tsx scripts/cleanup.ts dist && pnpm run build && pnpm run create-fixtures && tsc -p ./tsconfig.test.json && SKIP_OPTIMIZATION=true node ./dist/test/e2e/runE2ETest.js",
-    "test:minimal": "pnpm test",
+    "test": "tsx scripts/cleanup.ts dist && npm run build && npm run create-minimal && npm run create-fixtures && tsc -p ./tsconfig.test.json && node ./dist/test/e2e/runE2ETest.js",
+    "test:full": "tsx scripts/cleanup.ts dist && npm run build && npm run create-fixtures && tsc -p ./tsconfig.test.json && SKIP_OPTIMIZATION=true node ./dist/test/e2e/runE2ETest.js",
+    "test:minimal": "npm test",
     "test:clean": "tsx scripts/cleanup.ts .vscode-test/minimal-extension .vscode-test/user-data-isolated .vscode-test/user-data-dev",
     "create-minimal": "tsx scripts/create-minimal-extension.ts",
     "create-fixtures": "tsx scripts/create-test-fixtures.ts",
@@ -238,6 +207,27 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
-    "@stylistic/eslint-plugin": "^5.2.2"
+    "@stylistic/eslint-plugin": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.10.0",
+    "@types/vscode": "^1.102.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.1",
+    "esbuild": "^0.25.12",
+    "eslint": "^9.31.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-mocha": "^11.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-security": "^3.0.1",
+    "fast-glob": "^3.3.2",
+    "mocha": "^11.7.1",
+    "prettier": "^3.6.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.46.3"
   }
 }

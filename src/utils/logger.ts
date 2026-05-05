@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import type { ILogger } from '../di/interfaces/ILogger';
 
 export enum LogLevel {
   Debug = 0,
@@ -7,23 +8,49 @@ export enum LogLevel {
   Error = 3,
 }
 
-export class Logger {
-  private static instance: Logger;
-  private outputChannel: vscode.OutputChannel;
+export enum LogFormat {
+  Text = 'text',
+  JSON = 'json',
+}
+
+export class Logger implements ILogger {
+  private static instance: Logger | undefined;
+  private outputChannel: vscode.OutputChannel | null;
   private logLevel: LogLevel;
+  private logFormat: LogFormat;
 
   private constructor() {
     this.outputChannel = vscode.window.createOutputChannel('File Insights');
     this.logLevel = LogLevel.Info;
+    this.logFormat = LogFormat.Text;
   }
 
+  /**
+   * Create a new Logger instance (DI pattern)
+   */
+  public static create(): Logger {
+    return new Logger();
+  }
+
+  /**
+   * @deprecated Use create() for DI pattern instead
+   */
   public static getInstance(): Logger {
     Logger.instance ??= new Logger();
     return Logger.instance;
   }
 
+  private ensureChannel(): vscode.OutputChannel {
+    this.outputChannel ??= vscode.window.createOutputChannel('File Insights');
+    return this.outputChannel;
+  }
+
   public setLogLevel(level: LogLevel): void {
     this.logLevel = level;
+  }
+
+  public setLogFormat(format: LogFormat): void {
+    this.logFormat = format;
   }
 
   public debug(message: string, ...args: unknown[]): void {
@@ -56,38 +83,54 @@ export class Logger {
 
   private log(level: string, message: string, ...args: unknown[]): void {
     const timestamp = new Date().toISOString();
-    const formattedMessage = `[${timestamp}] [${level}] ${message}`;
+    const channel = this.ensureChannel();
 
-    if (args.length > 0) {
-      this.outputChannel.appendLine(`${formattedMessage} ${JSON.stringify(args)}`);
+    if (this.logFormat === LogFormat.JSON) {
+      // JSON format: structured logging
+      const logEntry = {
+        timestamp,
+        level,
+        message,
+        ...(args.length > 0 && { args }),
+      };
+      channel.appendLine(JSON.stringify(logEntry));
     } else {
-      this.outputChannel.appendLine(formattedMessage);
+      // Text format: traditional logging
+      const formattedMessage = `[${timestamp}] [${level}] ${message}`;
+      if (args.length > 0) {
+        channel.appendLine(`${formattedMessage} ${JSON.stringify(args)}`);
+      } else {
+        channel.appendLine(formattedMessage);
+      }
     }
 
     // Also log to console in development
     if (process.env['NODE_ENV'] === 'development') {
       switch (level) {
         case 'DEBUG':
-          console.debug(formattedMessage, ...args);
+          console.debug(message, ...args);
           break;
         case 'INFO':
-          console.info(formattedMessage, ...args);
+          console.info(message, ...args);
           break;
         case 'WARN':
-          console.warn(formattedMessage, ...args);
+          console.warn(message, ...args);
           break;
         case 'ERROR':
-          console.error(formattedMessage, ...args);
+          console.error(message, ...args);
           break;
       }
     }
   }
 
   public show(): void {
-    this.outputChannel.show();
+    this.ensureChannel().show();
   }
 
   public dispose(): void {
-    this.outputChannel.dispose();
+    if (this.outputChannel) {
+      this.outputChannel.dispose();
+      this.outputChannel = null;
+    }
   }
 }

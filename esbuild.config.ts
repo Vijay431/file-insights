@@ -1,8 +1,22 @@
 #!/usr/bin/env tsx
 
 import * as esbuild from 'esbuild';
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import * as path from 'path';
 
+/**
+ * Services that can be lazy-loaded for better initial bundle size
+ * Note: Current implementation uses dynamic imports in DI container,
+ * which provides similar benefits without separate bundles
+ */
+const LAZY_SERVICES = [
+  'src/services/fileMetadataService.ts',
+  'src/services/notificationService.ts',
+] as const;
+
+/**
+ * Create base build configuration
+ */
 const createConfig = (isProduction = false): esbuild.BuildOptions => ({
   entryPoints: ['./src/extension.ts'],
   bundle: true,
@@ -95,8 +109,107 @@ async function watch(): Promise<void> {
   await context.watch();
 }
 
+/**
+ * Build lazy services as separate bundles (optional optimization)
+ * This function creates separate chunks for services that can be loaded on demand
+ * Note: The current architecture uses dynamic imports which achieves similar results
+ */
+async function buildLazyServices(isProduction = false): Promise<void> {
+  console.log('🔄 Building lazy service bundles...');
+
+  // Ensure dist/lazy directory exists
+  const lazyDir = './dist/lazy';
+  if (!existsSync(lazyDir)) {
+    mkdirSync(lazyDir, { recursive: true });
+  }
+
+  for (const service of LAZY_SERVICES) {
+    const serviceName = path.basename(service, '.ts');
+    const entryPoint = `./${service}`;
+    const outFile = path.join(lazyDir, `${serviceName}.js`);
+
+    try {
+      await esbuild.build({
+        entryPoints: [entryPoint],
+        bundle: true,
+        outfile: outFile,
+        external: ['vscode'],
+        format: 'cjs',
+        platform: 'node',
+        target: 'node16',
+        sourcemap: !isProduction,
+        minify: isProduction,
+        treeShaking: true,
+        metafile: true,
+      });
+
+      console.log(`  ✅ Built lazy bundle: ${serviceName}`);
+    } catch (error) {
+      console.warn(`  ⚠️  Skipped lazy bundle for ${serviceName}:`, error);
+    }
+  }
+
+  console.log('✨ Lazy service bundles complete');
+}
+
+/**
+ * Analyze bundle composition for optimization opportunities
+ */
+function analyzeBundle(metafilePath: string): void {
+  if (!existsSync(metafilePath)) {
+    return;
+  }
+
+  try {
+    const metafile = JSON.parse(readFileSync(metafilePath, 'utf-8'));
+    const outputs = metafile.outputs;
+
+    for (const [filePath, output] of Object.entries(outputs)) {
+      if (filePath.endsWith('.js')) {
+        const bytes = output.bytes;
+        const kb = (bytes / 1024).toFixed(2);
+        console.log(`  📄 ${path.basename(filePath)}: ${kb} KB`);
+
+        // Show largest inputs
+        const inputs = Object.entries(output.inputs ?? {})
+          .map(([name, data]) => ({ name, bytes: (data as { bytes: number }).bytes }))
+          .sort((a, b) => b.bytes - a.bytes)
+          .slice(0, 5);
+
+        if (inputs.length > 0) {
+          console.log(`     Top contributors:`);
+          for (const input of inputs) {
+            const inputKb = (input.bytes / 1024).toFixed(2);
+            console.log(`       - ${path.basename(input.name)}: ${inputKb} KB`);
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.warn('Could not analyze bundle:', error);
+  }
+}
+
 // Export for external use
-export { build, createConfig, watch };
+export { build, buildLazyServices, createConfig, watch, analyzeBundle };
+
+// CLI interface
+if (require.main === module) {
+  const args = process.argv.slice(2);
+  const isProduction = args.includes('--production') || process.env['NODE_ENV'] === 'production';
+  const isWatch = args.includes('--watch');
+  const isAnalyze = args.includes('--analyze');
+
+  if (isWatch) {
+    watch().catch(console.error);
+  } else if (isAnalyze) {
+    build(isProduction).then(() => {
+      analyzeBundle('./dist/meta.json');
+    });
+  } else {
+    build(isProduction).catch(console.error);
+  }
+}
 
 // CLI interface
 if (require.main === module) {

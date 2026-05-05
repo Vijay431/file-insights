@@ -154,7 +154,7 @@ class MinimalExtensionCreator {
     const minimalDistPath = path.join(this.minimalExtensionPath, 'dist');
 
     if (!fs.existsSync(distPath)) {
-      throw new Error('dist directory not found. Please run "npm run build" first.');
+      throw new Error('dist directory not found. Please run "pnpm run build" first.');
     }
 
     // Copy main extension file
@@ -163,7 +163,7 @@ class MinimalExtensionCreator {
       fs.copyFileSync(extensionFile, path.join(minimalDistPath, 'extension.js'));
       console.log('   ✓ dist/extension.js');
     } else {
-      throw new Error('dist/extension.js not found. Please run "npm run build" first.');
+      throw new Error('dist/extension.js not found. Please run "pnpm run build" first.');
     }
 
     // Copy source maps if they exist (helpful for debugging)
