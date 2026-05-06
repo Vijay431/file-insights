@@ -31,3 +31,5 @@ test/fixtures/*.txt
 .worktrees/
 .security-key
 logs/security/
+
+*.backup
