@@ -210,16 +210,3 @@ if (require.main === module) {
     build(isProduction).catch(console.error);
   }
 }
-
-// CLI interface
-if (require.main === module) {
-  const args = process.argv.slice(2);
-  const isProduction = args.includes('--production') || process.env['NODE_ENV'] === 'production';
-  const isWatch = args.includes('--watch');
-
-  if (isWatch) {
-    watch().catch(console.error);
-  } else {
-    build(isProduction).catch(console.error);
-  }
-}
