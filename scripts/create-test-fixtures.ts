@@ -79,23 +79,25 @@ async function createFixtures(): Promise<void> {
 
 async function createLargeFile(filePath: string, sizeInBytes: number): Promise<void> {
   const fd = fs.openSync(filePath, 'w');
-  const bufferSize = 1024 * 1024; // 1MB buffer
-  const buffer = Buffer.alloc(bufferSize, 'A');
+  try {
+    const bufferSize = 1024 * 1024; // 1MB buffer
+    const buffer = Buffer.alloc(bufferSize, 'A');
 
-  let remainingBytes = sizeInBytes;
-  let position = 0;
+    let remainingBytes = sizeInBytes;
+    let position = 0;
 
-  while (remainingBytes > 0) {
-    const writeSize = Math.min(bufferSize, remainingBytes);
-    const writeBuffer = writeSize === bufferSize ? buffer : buffer.subarray(0, writeSize);
+    while (remainingBytes > 0) {
+      const writeSize = Math.min(bufferSize, remainingBytes);
+      const writeBuffer = writeSize === bufferSize ? buffer : buffer.subarray(0, writeSize);
 
-    fs.writeSync(fd, writeBuffer, 0, writeSize, position);
+      fs.writeSync(fd, writeBuffer, 0, writeSize, position);
 
-    position += writeSize;
-    remainingBytes -= writeSize;
+      position += writeSize;
+      remainingBytes -= writeSize;
+    }
+  } finally {
+    fs.closeSync(fd);
   }
-
-  fs.closeSync(fd);
 }
 
 function formatBytes(bytes: number): string {
