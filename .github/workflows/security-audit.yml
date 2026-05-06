@@ -95,7 +95,7 @@ jobs:
 
           # Try to fix vulnerabilities (pnpm uses update instead of audit fix)
           echo "Checking for available updates..."
-          pnpm update --latest > fix-results.txt 2>&1 || true
+          pnpm update > fix-results.txt 2>&1 || true
 
           # Check if pnpm-lock.yaml was modified
           if git diff --quiet pnpm-lock.yaml; then
@@ -142,35 +142,39 @@ jobs:
       - name: Create Security Issue for Manual Review
         if: steps.audit.outputs.critical > 0 || steps.audit.outputs.high > 0
         uses: actions/github-script@v7
+        env:
+          CRITICAL_COUNT: ${{ steps.audit.outputs.critical }}
+          HIGH_COUNT: ${{ steps.audit.outputs.high }}
+          AUTO_FIXES_AVAILABLE: ${{ steps.autofix.outputs.auto_fixes_available }}
+          FIXES_APPLIED: ${{ steps.autofix.outputs.fixes_applied }}
         with:
           script: |
             const fs = require('fs');
             const auditSummary = fs.readFileSync('audit-summary.md', 'utf8');
+            const criticalCount = process.env.CRITICAL_COUNT;
+            const highCount = process.env.HIGH_COUNT;
 
-            const title = `🚨 Security Alert: ${{ steps.audit.outputs.critical }} Critical, ${{ steps.audit.outputs.high }} High Vulnerabilities`;
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'security,automated',
+              state: 'open'
+            });
 
-            const body = `## Security Vulnerability Alert
+            if (existingIssues.data.length > 0) {
+              console.log('Open security issue already exists, skipping creation');
+              return;
+            }
 
-            The daily security audit has detected **critical** or **high** severity vulnerabilities that require immediate attention.
+            const title = `Security Alert: ${criticalCount} Critical, ${highCount} High Vulnerabilities`;
+            const autoFixesMsg = process.env.AUTO_FIXES_AVAILABLE === 'true'
+              ? 'Automatic fixes were attempted'
+              : 'No automatic fixes available';
+            const fixesAppliedMsg = process.env.FIXES_APPLIED === 'true'
+              ? 'A pull request with fixes has been created'
+              : 'Manual intervention required';
 
-            ${auditSummary}
-
-            ## Next Steps
-
-            1. **Immediate Action Required**: Review and address critical and high-severity vulnerabilities
-            2. **Update Dependencies**: Run \`pnpm update\` to update dependencies manually
-            3. **Test Thoroughly**: Ensure all functionality works after updates
-            4. **Security Review**: Consider additional security measures if needed
-
-            ## Automated Actions Taken
-
-            - ${{ steps.autofix.outputs.auto_fixes_available == 'true' && 'Automatic fixes were attempted' || 'No automatic fixes available' }}
-            - ${{ steps.autofix.outputs.fixes_applied == 'true' && 'A pull request with fixes has been created' || 'Manual intervention required' }}
-
-            ---
-
-            *This issue was automatically created by the Daily Security Audit workflow.*
-            *Audit Date: ${{ github.run_id }} | Run: ${{ github.run_number }}*`;
+            const body = `## Security Vulnerability Alert\n\nThe daily security audit has detected **critical** or **high** severity vulnerabilities.\n\n${auditSummary}\n\n## Automated Actions Taken\n\n- ${autoFixesMsg}\n- ${fixesAppliedMsg}`;
 
             await github.rest.issues.create({
               owner: context.repo.owner,
@@ -183,27 +187,16 @@ jobs:
       - name: Notify on Workflow Failure
         if: failure()
         uses: actions/github-script@v7
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_NUMBER: ${{ github.run_number }}
         with:
           script: |
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: '🔧 Daily Security Audit Failed',
-              body: `## Security Audit Workflow Failure
-
-              The daily security audit workflow has failed and requires attention.
-
-              **Workflow Run**: ${{ github.run_id }}
-              **Run Number**: ${{ github.run_number }}
-              **Failed Step**: Check the workflow logs for details
-
-              ## Action Required
-
-              Please review the workflow logs and fix any issues preventing the security audit from running properly.
-
-              ---
-
-              *This issue was automatically created due to workflow failure.*`,
+              title: 'Daily Security Audit Failed',
+              body: `## Security Audit Workflow Failure\n\nThe daily security audit workflow has failed.\n\n**Workflow Run**: ${process.env.RUN_ID}\n**Run Number**: ${process.env.RUN_NUMBER}`,
               labels: ['bug', 'workflow', 'automated']
             });
 
