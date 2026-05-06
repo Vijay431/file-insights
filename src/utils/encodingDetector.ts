@@ -166,11 +166,6 @@ export class EncodingDetector {
   }
 
   static hasBOM(buffer: Buffer): boolean {
-    if (buffer.length >= 3) {
-      const bom = buffer.slice(0, 3);
-      const utf8BOM = Buffer.from([0xef, 0xbb, 0xbf]);
-      return bom.equals(utf8BOM);
-    }
-    return false;
+    return EncodingDetector.detectBOM(buffer) !== null;
   }
 }
