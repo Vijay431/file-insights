@@ -39,6 +39,9 @@ export class SizeDeltaFormatter {
   }
 
   private static formatSize(bytes: number): { formatted: string; unit: string } {
+    if (bytes < 0) {
+      bytes = Math.abs(bytes);
+    }
     if (bytes === 0) {
       return { formatted: '0 B', unit: 'B' };
     }
@@ -76,7 +79,7 @@ export class SizeDeltaFormatter {
     const last = recent[recent.length - 1]!.size;
     const delta = last - first;
 
-    const threshold = Math.abs(first) * 0.1; // 10% threshold
+    const threshold = Math.max(Math.abs(first) * 0.1, 1);
 
     if (delta > threshold) {
       return 'up';
