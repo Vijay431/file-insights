@@ -29,7 +29,7 @@ suite('FileStatsCacheService', () => {
       path: uri.toString(),
       size: 1024,
       lastModified: new Date(),
-      metadata: { lines: 10, chars: 100, encoding: 'utf-8' },
+      metadata: { lineCount: 10, characterCount: 100, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     statStub.resolves({ mtime: 1000, size: 1024 } as vscode.FileStat);
@@ -58,7 +58,7 @@ suite('FileStatsCacheService', () => {
       path: uri.toString(),
       size: 1024,
       lastModified: new Date(),
-      metadata: { lines: 10, chars: 100, encoding: 'utf-8' },
+      metadata: { lineCount: 10, characterCount: 100, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     statStub.resolves({ mtime: 1000, size: 1024 } as vscode.FileStat);
@@ -78,7 +78,7 @@ suite('FileStatsCacheService', () => {
       path: uri.toString(),
       size: 1024,
       lastModified: new Date(),
-      metadata: { lines: 10, chars: 100, encoding: 'utf-8' },
+      metadata: { lineCount: 10, characterCount: 100, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     statStub.resolves({ mtime: 1000, size: 1024 } as vscode.FileStat);
@@ -103,7 +103,7 @@ suite('FileStatsCacheService', () => {
       path: uri.toString(),
       size: 1024,
       lastModified: new Date(),
-      metadata: { lines: 10, chars: 100, encoding: 'utf-8' },
+      metadata: { lineCount: 10, characterCount: 100, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     statStub.resolves({ mtime: 1000, size: 1024 } as vscode.FileStat);
@@ -123,7 +123,7 @@ suite('FileStatsCacheService', () => {
       path: uri1.toString(),
       size: 1024,
       lastModified: new Date(),
-      metadata: { lines: 10, chars: 100, encoding: 'utf-8' },
+      metadata: { lineCount: 10, characterCount: 100, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     statStub.resolves({ mtime: 1000, size: 1024 } as vscode.FileStat);
@@ -147,14 +147,14 @@ suite('FileStatsCacheService', () => {
       path: uri.toString(),
       size: 1024,
       lastModified: new Date(),
-      metadata: { lines: 10, chars: 100, encoding: 'utf-8' },
+      metadata: { lineCount: 10, characterCount: 100, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     const stats2: FileStats = {
       path: uri.toString(),
       size: 2048,
       lastModified: new Date(),
-      metadata: { lines: 20, chars: 200, encoding: 'utf-8' },
+      metadata: { lineCount: 20, characterCount: 200, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     statStub.resolves({ mtime: 1000, size: 1024 } as vscode.FileStat);
@@ -174,7 +174,7 @@ suite('FileStatsCacheService', () => {
       path: uri.toString(),
       size: 1024,
       lastModified: new Date(),
-      metadata: { lines: 10, chars: 100, encoding: 'utf-8' },
+      metadata: { lineCount: 10, characterCount: 100, encoding: 'utf-8', fileType: 'txt', relativePath: 'file.txt', isBinary: false, byteOrderMark: false },
     };
 
     statStub.resolves({ mtime: 1000, size: 1024 } as vscode.FileStat);

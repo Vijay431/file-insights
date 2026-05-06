@@ -85,7 +85,7 @@ export class MetricsCollector implements IMetricCollector {
         duration,
         success: true,
         timestamp: new Date(),
-        metadata,
+        ...(metadata !== undefined ? { metadata } : {}),
       });
     };
   }

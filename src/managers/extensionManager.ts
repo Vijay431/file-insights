@@ -27,7 +27,6 @@ export class ExtensionManager implements IExtensionManager {
   private commandRegistry: ICommandRegistry;
   private cache: IFileStatsCacheService;
   private disposables: vscode.Disposable[] = [];
-  private currentContext?: vscode.ExtensionContext;
 
   constructor(private container: DIContainer) {
     // Resolve services from DI container
@@ -76,9 +75,6 @@ export class ExtensionManager implements IExtensionManager {
     this.logger.info('Activating File Insights extension');
 
     try {
-      // Store context for command registration
-      this.currentContext = context;
-
       // Initialize components
       await this.initializeComponents();
 

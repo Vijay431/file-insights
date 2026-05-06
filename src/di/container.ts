@@ -1,6 +1,12 @@
 import * as vscode from 'vscode';
 
 import { TYPES } from './types';
+import type { Logger } from '../utils/logger';
+import type { ConfigurationService } from '../services/configurationService';
+import type { FileStatsCacheService } from '../services/fileStatsCacheService';
+import type { FileMetadataService } from '../services/fileMetadataService';
+import type { FileStatsService } from '../services/fileStatsService';
+import type { NotificationService } from '../services/notificationService';
 
 interface ServiceDescriptor {
   factory: () => unknown;
@@ -19,7 +25,9 @@ export class DIContainer {
   private parent?: DIContainer;
 
   constructor(parent?: DIContainer) {
-    this.parent = parent;
+    if (parent !== undefined) {
+      this.parent = parent;
+    }
   }
 
   /**
