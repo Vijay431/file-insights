@@ -4,12 +4,11 @@ import * as os from 'os';
 import { runTests } from '@vscode/test-electron';
 
 async function main() {
+	const tempWorkspace = path.join(os.tmpdir(), 'file-insights-test-workspace');
+	let exitCode = 0;
 	try {
 		const extensionDevelopmentPath = path.resolve(__dirname, '../../..');
 		const extensionTestsPath = path.resolve(__dirname, './index.js');
-
-		// Create a temporary workspace for testing
-		const tempWorkspace = path.join(os.tmpdir(), 'file-insights-test-workspace');
 
 		// Ensure workspace directory exists
 		if (!fs.existsSync(tempWorkspace)) {
@@ -31,17 +30,20 @@ async function main() {
 				'--disable-dev-shm-usage'
 			]
 		});
-
-		// Clean up temp workspace after tests
+	} catch (err) {
+		console.error('Failed to run tests:', err);
+		exitCode = 1;
+	} finally {
+		// Always clean up temp workspace
 		try {
 			fs.rmSync(tempWorkspace, { recursive: true, force: true });
 			console.log('Cleaned up test workspace');
 		} catch (cleanupError) {
 			console.warn('Failed to cleanup test workspace:', cleanupError);
 		}
-	} catch (err) {
-		console.error('Failed to run tests:', err);
-		process.exit(1);
+	}
+	if (exitCode !== 0) {
+		process.exit(exitCode);
 	}
 }
 
