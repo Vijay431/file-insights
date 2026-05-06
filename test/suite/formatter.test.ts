@@ -60,7 +60,7 @@ suite('SizeFormatter', () => {
   });
 
   test('fallbacks to auto for unknown format values', () => {
-    const configUnknown = createTestConfig('auto');
+    const configUnknown = createTestConfig('invalid_format' as FileInsightsConfig['displayFormat']);
     const formatted = SizeFormatter.formatSize(1_073_741_824, configUnknown);
 
     assert.strictEqual(formatted.unit, 'GB');
