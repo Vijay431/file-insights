@@ -173,7 +173,7 @@ export class StatusBarManager implements IStatusBarManager {
     }
 
     // Get previous size from cache for delta display
-    const fileUri = vscode.Uri.parse(fileStats.path);
+    const fileUri = vscode.Uri.file(fileStats.path);
     const previousSize = this.cache.getPreviousSize(fileUri);
     const deltaDisplay = SizeDeltaFormatter.formatDelta(fileStats.size, previousSize);
 
