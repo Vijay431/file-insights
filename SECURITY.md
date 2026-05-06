@@ -6,14 +6,15 @@ Use this section to tell people about which versions of your project are current
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
+| 2.0.x   | :white_check_mark: |
+| 1.x.x   | :x:                |
 
 ## Reporting a Vulnerability
 
 We take the security of File Insights VS Code Extension seriously. If you believe you have found a security vulnerability, please follow these steps:
 
 1. **DO NOT** disclose the vulnerability publicly.
-2. Send a detailed description of the vulnerability to [INSERT SECURITY EMAIL].
+2. Use [GitHub Security Advisories](https://github.com/Vijay431/file-insights/security/advisories/new) to report the vulnerability privately, or email vijayanand431@gmail.com with "SECURITY" in the subject line.
 3. You should receive a response within 48 hours.
 4. Please provide sufficient information to reproduce the vulnerability.
 
