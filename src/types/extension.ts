@@ -34,25 +34,6 @@ export interface MetadataDisplayConfig {
   showRelativePath: boolean;
 }
 
-export interface SizeWarningsConfig {
-  enabled: boolean;
-  thresholds: {
-    yellow: string;
-    orange: string;
-    red: string;
-  };
-  notificationFrequency: 'once' | 'always' | 'daily';
-  showNotification: boolean;
-}
-
-export interface MetadataDisplayConfig {
-  showLineCount: boolean;
-  showCharacterCount: boolean;
-  showEncoding: boolean;
-  showFileType: boolean;
-  showRelativePath: boolean;
-}
-
 export interface ColorCodingConfig {
   enabled: boolean;
   thresholds: {
