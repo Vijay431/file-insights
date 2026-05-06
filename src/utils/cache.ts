@@ -111,7 +111,9 @@ export class Cache<T> {
       return false;
     }
     if (Date.now() > entry.expiresAt) {
+      this.cache.delete(key);
       entry.expired = true;
+      this.expiredCount++;
       return false;
     }
     return true;
@@ -179,10 +181,12 @@ export class Cache<T> {
    * Start periodic cleanup of expired entries
    */
   private startCleanup(): void {
-    // Run cleanup every minute
     this.cleanupTimer = setInterval(() => {
       this.cleanup();
     }, 60000);
+    if (this.cleanupTimer.unref) {
+      this.cleanupTimer.unref();
+    }
   }
 
   /**
