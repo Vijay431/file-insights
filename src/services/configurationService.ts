@@ -343,12 +343,27 @@ export class ConfigurationService implements IConfigurationService {
         }
       }
 
+      if (settings.deltaDisplay !== undefined) {
+        if (settings.deltaDisplay.showDeltaIndicator !== undefined) {
+          await this.updateConfiguration(
+            'deltaDisplay.showDeltaIndicator',
+            settings.deltaDisplay.showDeltaIndicator,
+          );
+        }
+        if (settings.deltaDisplay.showDeltaInTooltip !== undefined) {
+          await this.updateConfiguration(
+            'deltaDisplay.showDeltaInTooltip',
+            settings.deltaDisplay.showDeltaInTooltip,
+          );
+        }
+      }
+
       this.logger.info(`Settings imported from ${fileUri.fsPath}`);
       vscode.window.showInformationMessage('File Insights settings imported successfully');
     } catch (error) {
       this.logger.error('Failed to import settings', error);
       const message = error instanceof Error ? error.message : String(error);
-      vscode.window.showErrorMessage(`Failed to import settings ${message}`);
+      vscode.window.showErrorMessage(`Failed to import settings: ${message}`);
     }
   }
 }
