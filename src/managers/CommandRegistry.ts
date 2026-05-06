@@ -24,6 +24,11 @@ export class CommandRegistry implements ICommandRegistry {
     id: string,
     handler: (...args: unknown[]) => unknown,
   ): vscode.Disposable {
+    if (this.commands.has(id)) {
+      this.logger.warn(`Command already registered: ${id}. Disposing previous registration.`);
+      this.commands.get(id)?.dispose();
+    }
+
     this.logger.debug(`Registering command: ${id}`);
 
     const disposable = vscode.commands.registerCommand(id, handler);
