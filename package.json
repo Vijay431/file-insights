@@ -5,7 +5,8 @@
   "version": "2.0.0",
   "publisher": "anomalyco",
   "engines": {
-    "vscode": "^1.102.0"
+    "vscode": "^1.102.0",
+    "node": ">=20.0.0"
   },
   "icon": "resources/icon.png",
   "categories": [
@@ -238,6 +239,29 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
-    "@stylistic/eslint-plugin": "^5.2.2"
+    "@stylistic/eslint-plugin": "^5.2.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^24.10.0",
+    "@types/sinon": "^17.0.4",
+    "@types/vscode": "^1.102.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.1",
+    "esbuild": "^0.25.12",
+    "eslint": "^9.31.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-mocha": "^11.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-security": "^3.0.1",
+    "fast-glob": "^3.3.2",
+    "mocha": "^11.7.1",
+    "prettier": "^3.6.2",
+    "sinon": "^19.0.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.46.3"
   }
 }
