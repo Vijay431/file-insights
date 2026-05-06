@@ -41,8 +41,8 @@ export default tseslint.config(
       'src/**/*.js.map',
       'test/**/*.js',
       'test/**/*.js.map',
-      'srcipts/**/*.js',
-      'srcipts/**/*.js.map',
+      'scripts/**/*.js',
+      'scripts/**/*.js.map',
     ],
   },
 
