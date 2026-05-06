@@ -6,6 +6,10 @@ export class SizeFormatter {
   private static readonly BYTES_PER_UNIT = 1024;
 
   static formatSize(bytes: number, config: FileInsightsConfig): FormattedSize {
+    if (bytes < 0) {
+      return { value: 0, unit: 'B', formatted: '0 B' };
+    }
+
     if (bytes === 0) {
       return { value: 0, unit: 'B', formatted: '0 B' };
     }
@@ -152,7 +156,7 @@ export class SizeFormatter {
   private static parseSizeString(sizeStr: string): number {
     const match = sizeStr.match(
       // eslint-disable-next-line security/detect-unsafe-regex
-      /^(\d+(?:\.\d+)?)(KB|MB|GB|TB)?$/i
+      /^(\d+(?:\.\d+)?)(B|KB|MB|GB|TB)?$/i
     );
     if (!match?.[1]) {
       return 0;

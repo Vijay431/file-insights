@@ -157,7 +157,7 @@ export class NotificationService implements INotificationService {
   }
 
   private parseSizeString(sizeStr: string): number {
-    const match = sizeStr.match(/^(\d+(?:\.\d+)?)(KB|MB|GB|TB)?$/i);
+    const match = sizeStr.match(/^(\d+(?:\.\d+)?)(B|KB|MB|GB|TB)?$/i);
     if (!match?.[1]) {
       return 0;
     }
