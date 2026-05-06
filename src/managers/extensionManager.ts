@@ -213,7 +213,7 @@ export class ExtensionManager implements IExtensionManager {
     return this.statusBarManager;
   }
 
-  public getConfigurationService(): ConfigurationService {
+  public getConfigurationService(): IConfigurationService {
     return this.configService;
   }
 
