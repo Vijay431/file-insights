@@ -88,11 +88,11 @@ jobs:
       - name: Check for Known Vulnerabilities
         run: npm audit --audit-level=moderate --json | jq '.vulnerabilities | length'
 
-  # Dry-run publish job - validates publishing on non-master branches
+  # Dry-run publish job - validates publishing on non-main branches
   dry-run-publish:
     name: Validate Publishing (Dry Run)
     needs: [build, lint, security]
-    if: github.ref != 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref != 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
@@ -111,11 +111,11 @@ jobs:
       - name: Validate Extension Package
         run: npm run package
 
-  # Deploy job - ONLY runs on master branch after all checks pass
+  # Deploy job - ONLY runs on main branch after all checks pass
   deploy:
     name: Deploy to VS Code Marketplace
     needs: [build, lint, security]
-    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     environment:
